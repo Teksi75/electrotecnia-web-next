@@ -1,6 +1,6 @@
 ﻿import Link from "next/link";
 
-import type { ContentNode } from "@/content/nav";
+import type { ContentNode } from "@/types";
 
 import { Button } from "@/components/ui/Button";
 

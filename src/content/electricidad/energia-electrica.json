@@ -1,0 +1,31 @@
+{
+  "title": "Energía eléctrica",
+  "part": 2,
+  "order": 9,
+  "description": "Energía transferida por una corriente en el tiempo.",
+  "blocks": [
+    {
+      "type": "idea",
+      "title": "Idea clave",
+      "body": "PENDIENTE: pegar texto base del chat"
+    },
+    {
+      "type": "explain",
+      "title": "Mini explicación",
+      "body": "PENDIENTE: pegar texto base del chat"
+    },
+    {
+      "type": "example",
+      "title": "Ejemplo",
+      "body": "PENDIENTE: pegar ejemplo numérico con unidades SI",
+      "mono": true
+    },
+    {
+      "type": "formulas",
+      "title": "Fórmulas",
+      "items": [
+        "PENDIENTE: pegar fórmulas del chat (si aplica)"
+      ]
+    }
+  ]
+}

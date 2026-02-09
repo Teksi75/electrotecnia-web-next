@@ -1,0 +1,77 @@
+{
+  "title": "Leyes de Kirchhoff",
+  "part": 2,
+  "order": 7,
+  "description": "Leyes de conservación aplicadas a circuitos.",
+  "blocks": [
+    {
+      "type": "idea",
+      "title": "Idea clave",
+      "body": "PENDIENTE: pegar texto base del chat"
+    },
+    {
+      "type": "explain",
+      "title": "Mini explicación",
+      "body": "PENDIENTE: pegar texto base del chat"
+    },
+    {
+      "type": "example",
+      "title": "Ejemplo",
+      "body": "PENDIENTE: pegar ejemplo numérico con unidades SI",
+      "mono": true
+    },
+    {
+      "type": "formulas",
+      "title": "Fórmulas",
+      "items": [
+        "PENDIENTE: pegar fórmulas del chat (si aplica)"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "primera-ley-corrientes-o-nodos",
+      "title": "Primera ley (corrientes o nodos)",
+      "blocks": [
+        {
+          "type": "idea",
+          "title": "Idea clave",
+          "body": "PENDIENTE: pegar texto base del chat"
+        },
+        {
+          "type": "explain",
+          "title": "Mini explicación",
+          "body": "PENDIENTE: pegar texto base del chat"
+        },
+        {
+          "type": "example",
+          "title": "Ejemplo",
+          "body": "PENDIENTE: pegar ejemplo numérico con unidades SI",
+          "mono": true
+        }
+      ]
+    },
+    {
+      "id": "segunda-ley-tensiones-o-mallas",
+      "title": "Segunda ley (tensiones o mallas)",
+      "blocks": [
+        {
+          "type": "idea",
+          "title": "Idea clave",
+          "body": "PENDIENTE: pegar texto base del chat"
+        },
+        {
+          "type": "explain",
+          "title": "Mini explicación",
+          "body": "PENDIENTE: pegar texto base del chat"
+        },
+        {
+          "type": "example",
+          "title": "Ejemplo",
+          "body": "PENDIENTE: pegar ejemplo numérico con unidades SI",
+          "mono": true
+        }
+      ]
+    }
+  ]
+}

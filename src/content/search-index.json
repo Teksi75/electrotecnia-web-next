@@ -1,0 +1,98 @@
+[
+  {
+    "title": "Campo eléctrico",
+    "href": "/unidad/electricidad/campo-electrico",
+    "description": "Representación espacial de la acción eléctrica.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Circuitos eléctricos",
+    "href": "/unidad/electricidad/circuitos-electricos",
+    "description": "Configuraciones de conexión en circuitos.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica) PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI"
+  },
+  {
+    "title": "Corriente eléctrica",
+    "href": "/unidad/electricidad/corriente-electrica",
+    "description": "Flujo de carga eléctrica en un conductor.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Energía eléctrica",
+    "href": "/unidad/electricidad/energia-electrica",
+    "description": "Energía transferida por una corriente en el tiempo.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Energía potencial eléctrica",
+    "href": "/unidad/electricidad/energia-potencial-electrica",
+    "description": "Energía asociada a la posición en un campo eléctrico.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Fuerza eléctrica",
+    "href": "/unidad/electricidad/fuerza-electrica",
+    "description": "Interacción eléctrica entre cuerpos cargados.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Ley de Coulomb",
+    "href": "/unidad/electricidad/ley-de-coulomb",
+    "description": "Relación entre cargas y fuerza eléctrica.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Ley de Joule",
+    "href": "/unidad/electricidad/ley-de-joule",
+    "description": "Calor disipado por efecto resistivo.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Ley de Ohm",
+    "href": "/unidad/electricidad/ley-de-ohm",
+    "description": "Relación entre tensión, corriente y resistencia.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Leyes de Kirchhoff",
+    "href": "/unidad/electricidad/leyes-de-kirchhoff",
+    "description": "Leyes de conservación aplicadas a circuitos.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica) PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI"
+  },
+  {
+    "title": "Métodos de electrificación de un cuerpo",
+    "href": "/unidad/electricidad/metodos-electrificacion",
+    "description": "Formas de electrizar un cuerpo por interacción.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica) PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI"
+  },
+  {
+    "title": "Potencia eléctrica",
+    "href": "/unidad/electricidad/potencia-electrica",
+    "description": "Ritmo de consumo o entrega de energía.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Potencial eléctrico",
+    "href": "/unidad/electricidad/potencial-electrico",
+    "description": "Trabajo por unidad de carga entre dos puntos.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Resistencia eléctrica",
+    "href": "/unidad/electricidad/resistencia-electrica",
+    "description": "Oposición al paso de la corriente.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Tensión eléctrica (diferencia de potencial)",
+    "href": "/unidad/electricidad/tension-electrica",
+    "description": "Diferencia de energía por unidad de carga.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica)"
+  },
+  {
+    "title": "Variación de la resistencia",
+    "href": "/unidad/electricidad/variacion-de-la-resistencia",
+    "description": "Factores geométricos y físicos de la resistencia.",
+    "bodyPlain": "PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar fórmulas del chat (si aplica) PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI PENDIENTE: pegar texto base del chat PENDIENTE: pegar texto base del chat PENDIENTE: pegar ejemplo numérico con unidades SI"
+  }
+]

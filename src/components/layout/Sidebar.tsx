@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { getSectionNodes } from "@/lib/nav";
-import type { ContentNode } from "@/content/nav";
+import type { ContentNode } from "@/types";
 
 import { Collapsible } from "@/components/ui/Collapsible";
 import { cn } from "@/lib/utils";

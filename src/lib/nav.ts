@@ -1,4 +1,5 @@
-﻿import { electricidadNav, type ContentNode } from "@/content/nav";
+import { electricidadNav } from "@/content/nav";
+import type { ContentNode } from "@/types";
 
 function walkNodes(nodes: ContentNode[], includeAnchors: boolean): ContentNode[] {
   const results: ContentNode[] = [];
@@ -24,6 +25,10 @@ export function getTopicNodes() {
   return electricidadNav.flatMap((section) => walkNodes(section.children, false));
 }
 
+export function getPageNodes() {
+  return getTopicNodes().filter((node) => node.isPage);
+}
+
 export function getTopicBySlug(slug: string) {
   return getTopicNodes().find((node) => node.slug === slug) ?? null;
 }
@@ -34,7 +39,7 @@ export function getPartFirstTopic(part: 1 | 2) {
 }
 
 export function getPrevNextBySlug(slug: string) {
-  const topics = getTopicNodes();
+  const topics = getPageNodes();
   const index = topics.findIndex((node) => node.slug === slug);
 
   if (index === -1) {
@@ -45,8 +50,4 @@ export function getPrevNextBySlug(slug: string) {
     prev: topics[index - 1] ?? null,
     next: topics[index + 1] ?? null,
   };
-}
-
-export function getAllIndexableNodes() {
-  return electricidadNav.flatMap((section) => walkNodes(section.children, true));
 }

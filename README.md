@@ -1,21 +1,26 @@
-﻿# Electrotecnia Web
+# Electrotecnia Web Next
 
-Web de consulta tipo wiki/apunte para la unidad de Electricidad, construida con Next.js (App Router), TypeScript, Tailwind CSS y MDX.
+Web de consulta tipo wiki/apunte para la unidad de Electricidad, construida con Next.js (App Router), TypeScript, Tailwind CSS y contenido estructurado en JSON.
 
-## Correr en local
-1. `npm install`
-2. `npm run dev`
-3. Abrir `http://localhost:3000`
+## Desarrollo
+
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+> `prebuild` genera automáticamente `src/content/search-index.json` a partir de `src/content/electricidad/*.json`.
 
 ## Estructura de contenido
-- Navegacion: `src/content/nav.ts`
-- Temas MDX: `src/content/electricidad/**.mdx`
 
-## Agregar un tema
-1. Crear el archivo `.mdx` dentro de `src/content/electricidad/...` con frontmatter:
-   - `title`
-   - `part`
-   - `order`
-   - `description`
-2. Agregar el nodo correspondiente en `src/content/nav.ts` con `title`, `slug`, `part`, `order`, `description`, `href` y `children` si aplica.
-3. Si el tema tiene subitems internos, agregar headings con id en el mismo MDX (ejemplo: `<h3 id="por-frotamiento">Por frotamiento</h3>`) y enlazarlos desde `nav.ts` con `#anchor`.
+- Navegación: `src/content/nav.ts`
+- Temas: `src/content/electricidad/<slug>.json`
+- Índice de búsqueda generado: `src/content/search-index.json`
+
+Cada tema usa bloques estructurados (`idea`, `explain`, `example`, `formulas`) y opcionalmente `sections` para subitems.
