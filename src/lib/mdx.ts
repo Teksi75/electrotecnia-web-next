@@ -1,9 +1,12 @@
-﻿import path from "node:path";
+import path from "node:path";
+import fs from "node:fs/promises";
 
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
-import { cache } from "react";
+import { cache, createElement } from "react";
 import remarkGfm from "remark-gfm";
+
+import { getTopicNodes } from "@/lib/nav";
 
 export type DocFrontmatter = {
   title: string;
@@ -21,60 +24,49 @@ type DocRecord = {
 
 const CONTENT_ROOT = path.join(process.cwd(), "src", "content", "electricidad");
 
-async function walkDir(dir: string): Promise<string[]> {
-  const entries = await import("node:fs/promises").then((fs) =>
-    fs.readdir(dir, { withFileTypes: true }),
-  );
-
-  const files = await Promise.all(
-    entries.map(async (entry) => {
-      const resolved = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        return walkDir(resolved);
-      }
-      if (entry.isFile() && resolved.endsWith(".mdx")) {
-        return [resolved];
-      }
-      return [] as string[];
-    }),
-  );
-
-  return files.flat();
+function slugifyHeading(value: string) {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
 }
 
-const getSlugMap = cache(async () => {
-  const filePaths = await walkDir(CONTENT_ROOT);
-  return new Map(filePaths.map((filePath) => [path.basename(filePath, ".mdx"), filePath]));
-});
-
 export const getAllDocSlugs = cache(async () => {
-  const slugMap = await getSlugMap();
-  return [...slugMap.keys()].sort();
+  return getTopicNodes()
+    .filter((node) => node.isPage)
+    .map((node) => node.slug);
 });
 
 export const getDocBySlug = cache(async (slug: string): Promise<DocRecord | null> => {
-  const slugMap = await getSlugMap();
-  const filePath = slugMap.get(slug);
+  const filePath = path.join(CONTENT_ROOT, `${slug}.mdx`);
 
-  if (!filePath) {
+  try {
+    const raw = await fs.readFile(filePath, "utf8");
+    const parsed = matter(raw);
+
+    return {
+      slug,
+      filePath,
+      frontmatter: parsed.data as DocFrontmatter,
+      source: parsed.content,
+    };
+  } catch {
     return null;
   }
-
-  const fs = await import("node:fs/promises");
-  const raw = await fs.readFile(filePath, "utf8");
-  const parsed = matter(raw);
-
-  return {
-    slug,
-    filePath,
-    frontmatter: parsed.data as DocFrontmatter,
-    source: parsed.content,
-  };
 });
 
 export async function renderMdx(source: string) {
   const { content } = await compileMDX({
     source,
+    components: {
+      h3: ({ children }) => {
+        const text = String(children);
+        return createElement("h3", { id: slugifyHeading(text) }, children);
+      },
+    },
     options: {
       parseFrontmatter: false,
       mdxOptions: {
