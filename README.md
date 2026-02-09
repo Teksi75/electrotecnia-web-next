@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# Electrotecnia Web
 
-## Getting Started
+Web de consulta tipo wiki/apunte para la unidad de Electricidad, construida con Next.js (App Router), TypeScript, Tailwind CSS y MDX.
 
-First, run the development server:
+## Correr en local
+1. `npm install`
+2. `npm run dev`
+3. Abrir `http://localhost:3000`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Estructura de contenido
+- Navegacion: `src/content/nav.ts`
+- Temas MDX: `src/content/electricidad/**.mdx`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Agregar un tema
+1. Crear el archivo `.mdx` dentro de `src/content/electricidad/...` con frontmatter:
+   - `title`
+   - `part`
+   - `order`
+   - `description`
+2. Agregar el nodo correspondiente en `src/content/nav.ts` con `title`, `slug`, `part`, `order`, `description`, `href` y `children` si aplica.
+3. Si el tema tiene subitems internos, agregar headings con id en el mismo MDX (ejemplo: `<h3 id="por-frotamiento">Por frotamiento</h3>`) y enlazarlos desde `nav.ts` con `#anchor`.
