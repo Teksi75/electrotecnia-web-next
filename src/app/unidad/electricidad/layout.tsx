@@ -1,6 +1,5 @@
 ﻿import type { ReactNode } from "react";
 
-import { MobileDrawer } from "@/components/layout/MobileDrawer";
 import { Sidebar } from "@/components/layout/Sidebar";
 
 export default function ElectricidadLayout({ children }: { children: ReactNode }) {
@@ -11,12 +10,7 @@ export default function ElectricidadLayout({ children }: { children: ReactNode }
           <Sidebar />
         </div>
       </aside>
-      <section>
-        <div className="mb-4 lg:hidden">
-          <MobileDrawer />
-        </div>
-        {children}
-      </section>
+      <section>{children}</section>
     </main>
   );
 }
