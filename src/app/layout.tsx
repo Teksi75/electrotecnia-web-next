@@ -1,5 +1,4 @@
-﻿import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata } from "next";
 
 import { Header } from "@/components/layout/Header";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
@@ -7,16 +6,6 @@ import { siteConfig } from "@/config/site";
 import { BASE_URL } from "@/lib/seo";
 
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -41,11 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className="antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <div className="min-h-screen bg-background text-foreground">
             <Header />
-            {children}
+            <div className="pb-12">{children}</div>
+            <footer className="border-t border-slate-200 py-4 text-center text-sm text-slate-500 dark:border-slate-800">
+              Material de consulta (Electrotecnia)
+            </footer>
           </div>
         </ThemeProvider>
       </body>

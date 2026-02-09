@@ -1,0 +1,31 @@
+{
+  "title": "Potencial eléctrico",
+  "part": 1,
+  "order": 6,
+  "description": "Trabajo por unidad de carga entre dos puntos.",
+  "blocks": [
+    {
+      "type": "idea",
+      "title": "Idea clave",
+      "body": "PENDIENTE: pegar texto base del chat"
+    },
+    {
+      "type": "explain",
+      "title": "Explicación",
+      "body": "PENDIENTE: pegar texto base del chat"
+    },
+    {
+      "type": "example",
+      "title": "Ejemplo",
+      "body": "PENDIENTE: pegar ejemplo numérico con unidades SI",
+      "mono": true
+    },
+    {
+      "type": "formulas",
+      "title": "Fórmulas",
+      "items": [
+        "PENDIENTE: pegar fórmulas cuando aplique"
+      ]
+    }
+  ]
+}
