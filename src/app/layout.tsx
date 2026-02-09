@@ -45,7 +45,10 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <div className="min-h-screen bg-background text-foreground">
             <Header />
-            {children}
+            <div className="mx-auto w-full max-w-7xl">{children}</div>
+            <footer className="border-t border-slate-200 px-4 py-6 text-center text-sm text-slate-600 dark:border-slate-800 dark:text-slate-300 sm:px-6 lg:px-8">
+              Material de consulta (Electrotecnia)
+            </footer>
           </div>
         </ThemeProvider>
       </body>
