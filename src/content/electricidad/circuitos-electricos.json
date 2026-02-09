@@ -1,0 +1,99 @@
+{
+  "title": "Circuitos eléctricos",
+  "part": 2,
+  "order": 6,
+  "description": "Configuraciones de conexión en circuitos.",
+  "blocks": [
+    {
+      "type": "idea",
+      "title": "Idea clave",
+      "body": "PENDIENTE: pegar texto base del chat"
+    },
+    {
+      "type": "explain",
+      "title": "Mini explicación",
+      "body": "PENDIENTE: pegar texto base del chat"
+    },
+    {
+      "type": "example",
+      "title": "Ejemplo",
+      "body": "PENDIENTE: pegar ejemplo numérico con unidades SI",
+      "mono": true
+    },
+    {
+      "type": "formulas",
+      "title": "Fórmulas",
+      "items": [
+        "PENDIENTE: pegar fórmulas del chat (si aplica)"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "circuitos-en-serie",
+      "title": "Circuitos en serie",
+      "blocks": [
+        {
+          "type": "idea",
+          "title": "Idea clave",
+          "body": "PENDIENTE: pegar texto base del chat"
+        },
+        {
+          "type": "explain",
+          "title": "Mini explicación",
+          "body": "PENDIENTE: pegar texto base del chat"
+        },
+        {
+          "type": "example",
+          "title": "Ejemplo",
+          "body": "PENDIENTE: pegar ejemplo numérico con unidades SI",
+          "mono": true
+        }
+      ]
+    },
+    {
+      "id": "circuitos-en-paralelo",
+      "title": "Circuitos en paralelo",
+      "blocks": [
+        {
+          "type": "idea",
+          "title": "Idea clave",
+          "body": "PENDIENTE: pegar texto base del chat"
+        },
+        {
+          "type": "explain",
+          "title": "Mini explicación",
+          "body": "PENDIENTE: pegar texto base del chat"
+        },
+        {
+          "type": "example",
+          "title": "Ejemplo",
+          "body": "PENDIENTE: pegar ejemplo numérico con unidades SI",
+          "mono": true
+        }
+      ]
+    },
+    {
+      "id": "circuitos-mixtos",
+      "title": "Circuitos mixtos",
+      "blocks": [
+        {
+          "type": "idea",
+          "title": "Idea clave",
+          "body": "PENDIENTE: pegar texto base del chat"
+        },
+        {
+          "type": "explain",
+          "title": "Mini explicación",
+          "body": "PENDIENTE: pegar texto base del chat"
+        },
+        {
+          "type": "example",
+          "title": "Ejemplo",
+          "body": "PENDIENTE: pegar ejemplo numérico con unidades SI",
+          "mono": true
+        }
+      ]
+    }
+  ]
+}
