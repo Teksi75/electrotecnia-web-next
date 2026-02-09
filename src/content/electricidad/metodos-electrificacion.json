@@ -1,0 +1,37 @@
+{
+  "title": "Métodos de electrificación de un cuerpo",
+  "part": 1,
+  "order": 1,
+  "description": "Formas de electrizar un cuerpo por interacción.",
+  "blocks": [
+    { "type": "idea", "title": "Idea clave", "body": "PENDIENTE: pegar texto base del chat" },
+    { "type": "explain", "title": "Explicación", "body": "PENDIENTE: pegar texto base del chat" },
+    { "type": "example", "title": "Ejemplo", "body": "PENDIENTE: pegar ejemplo numérico con unidades SI", "mono": true }
+  ],
+  "sections": [
+    {
+      "id": "por-frotamiento",
+      "title": "Por frotamiento",
+      "blocks": [
+        { "type": "explain", "title": "Explicación", "body": "PENDIENTE: pegar texto base del chat" },
+        { "type": "example", "title": "Ejemplo", "body": "PENDIENTE: pegar ejemplo numérico con unidades SI", "mono": true }
+      ]
+    },
+    {
+      "id": "por-contacto",
+      "title": "Por contacto",
+      "blocks": [
+        { "type": "explain", "title": "Explicación", "body": "PENDIENTE: pegar texto base del chat" },
+        { "type": "example", "title": "Ejemplo", "body": "PENDIENTE: pegar ejemplo numérico con unidades SI", "mono": true }
+      ]
+    },
+    {
+      "id": "por-induccion",
+      "title": "Por inducción",
+      "blocks": [
+        { "type": "explain", "title": "Explicación", "body": "PENDIENTE: pegar texto base del chat" },
+        { "type": "example", "title": "Ejemplo", "body": "PENDIENTE: pegar ejemplo numérico con unidades SI", "mono": true }
+      ]
+    }
+  ]
+}
