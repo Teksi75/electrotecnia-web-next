@@ -4,13 +4,14 @@ import { siteConfig } from "@/config/site";
 import { getSearchIndex } from "@/lib/search";
 
 import { SearchBox } from "@/components/search/SearchBox";
+import { MobileDrawer } from "@/components/layout/MobileDrawer";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 export async function Header() {
   const searchIndex = await getSearchIndex();
 
   return (
-    <header className="border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="text-base font-bold tracking-tight sm:text-lg">
           {siteConfig.name}
@@ -21,6 +22,7 @@ export async function Header() {
           </Link>
         </nav>
         <div className="ml-auto flex items-center gap-2">
+          <MobileDrawer />
           <SearchBox items={searchIndex} />
           <ThemeToggle />
         </div>
