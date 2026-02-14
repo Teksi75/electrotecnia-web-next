@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import { BlockMath } from "@/components/content/BlockMath";
-import { InlineMath } from "@/components/content/InlineMath";
+import { Math } from "@/components/content/Math";
+import { MathBlock } from "@/components/content/MathBlock";
 import type { ContentNode } from "@/types";
 
 import type { InlineToken } from "@/lib/mathTokens";
@@ -9,7 +9,7 @@ import type { InlineToken } from "@/lib/mathTokens";
 export function renderInlineTokens(tokens: InlineToken[]): ReactNode[] {
   return tokens.map((token, index) => {
     if (token.kind === "inlineMath") {
-      return <InlineMath key={`math-${token.latex}-${index}`} latex={token.latex} />;
+      return <Math key={`math-${token.latex}-${index}`} latex={token.latex} />;
     }
 
     return <span key={`text-${index}`}>{token.text.replace(/\\\$/g, "$")}</span>;
@@ -23,7 +23,7 @@ export function renderContentNodes(nodes: ContentNode[], fallbackBody?: string, 
 
   return nodes.map((node, index) => {
     if (node.kind === "blockMath") {
-      return <BlockMath key={`block-math-${node.latex}-${index}`} latex={node.latex} />;
+      return <MathBlock key={`block-math-${node.latex}-${index}`} latex={node.latex} />;
     }
 
     return (

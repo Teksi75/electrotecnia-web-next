@@ -14,18 +14,44 @@ const isEscaped = (text: string, index: number) => {
   return backslashes % 2 === 1;
 };
 
+const readInlineMath = (text: string, start: number) => {
+  if (text[start] === "$" && text[start + 1] !== "$" && !isEscaped(text, start)) {
+    let end = start + 1;
+    while (end < text.length) {
+      if (text[end] === "$" && !isEscaped(text, end)) {
+        return { latex: text.slice(start + 1, end).trim(), next: end + 1 };
+      }
+      end += 1;
+    }
+    return null;
+  }
+
+  if (text[start] === "\\" && text[start + 1] === "(") {
+    let end = start + 2;
+    while (end < text.length - 1) {
+      if (text[end] === "\\" && text[end + 1] === ")" && !isEscaped(text, end)) {
+        return { latex: text.slice(start + 2, end).trim(), next: end + 2 };
+      }
+      end += 1;
+    }
+  }
+
+  return null;
+};
+
 export function tokenizeInlineMath(text: string): InlineToken[] {
-  if (!text.includes("$")) {
-    return [{ kind: "text", text }];
+  if (!text.includes("$") && !text.includes("\\(")) {
+    return [{ kind: "text", text: text.replace(/\\\$/g, "$") }];
   }
 
   const tokens: InlineToken[] = [];
   let cursor = 0;
   let textBuffer = "";
+  let inInlineCode = false;
 
   const pushTextBuffer = () => {
     if (textBuffer.length) {
-      tokens.push({ kind: "text", text: textBuffer });
+      tokens.push({ kind: "text", text: textBuffer.replace(/\\\$/g, "$") });
       textBuffer = "";
     }
   };
@@ -33,84 +59,107 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
   while (cursor < text.length) {
     const currentChar = text[cursor];
 
-    if (currentChar === "\\" && text[cursor + 1] === "$") {
-      textBuffer += "$";
-      cursor += 2;
-      continue;
-    }
-
-    if (currentChar !== "$") {
+    if (currentChar === "`") {
+      inInlineCode = !inInlineCode;
       textBuffer += currentChar;
       cursor += 1;
       continue;
     }
 
-    if (isEscaped(text, cursor) || text[cursor + 1] === "$") {
-      textBuffer += "$";
+    if (inInlineCode) {
+      textBuffer += currentChar;
       cursor += 1;
       continue;
     }
 
-    let end = cursor + 1;
-    while (end < text.length) {
-      if (text[end] === "$" && !isEscaped(text, end)) break;
-      end += 1;
+    const inlineMath = readInlineMath(text, cursor);
+    if (inlineMath) {
+      pushTextBuffer();
+      if (inlineMath.latex.length) {
+        tokens.push({ kind: "inlineMath", latex: inlineMath.latex });
+      }
+      cursor = inlineMath.next;
+      continue;
     }
 
-    if (end >= text.length) {
-      textBuffer += text.slice(cursor);
-      break;
-    }
-
-    pushTextBuffer();
-
-    const latex = text.slice(cursor + 1, end).trim();
-    if (latex.length) {
-      tokens.push({ kind: "inlineMath", latex });
-    } else {
-      tokens.push({ kind: "text", text: "$" });
-    }
-
-    cursor = end + 1;
+    textBuffer += currentChar;
+    cursor += 1;
   }
 
   pushTextBuffer();
 
-  return tokens.length ? tokens : [{ kind: "text", text }];
+  return tokens.length ? tokens : [{ kind: "text", text: text.replace(/\\\$/g, "$") }];
 }
 
+const readBlockMath = (text: string, start: number) => {
+  if (text[start] === "$" && text[start + 1] === "$" && !isEscaped(text, start)) {
+    let end = start + 2;
+    while (end < text.length - 1) {
+      if (text[end] === "$" && text[end + 1] === "$" && !isEscaped(text, end)) {
+        return { latex: text.slice(start + 2, end).trim(), next: end + 2 };
+      }
+      end += 1;
+    }
+    return null;
+  }
+
+  if (text[start] === "\\" && text[start + 1] === "[") {
+    let end = start + 2;
+    while (end < text.length - 1) {
+      if (text[end] === "\\" && text[end + 1] === "]" && !isEscaped(text, end)) {
+        return { latex: text.slice(start + 2, end).trim(), next: end + 2 };
+      }
+      end += 1;
+    }
+  }
+
+  return null;
+};
+
 export function splitBlockMath(text: string): Array<TextBlockToken | BlockToken> {
-  if (!text.includes("$$")) {
+  if (!text.includes("$$") && !text.includes("\\[")) {
     return [{ kind: "textBlock", text }];
   }
 
   const parts: Array<TextBlockToken | BlockToken> = [];
   let cursor = 0;
+  let lastTextStart = 0;
+  let inFencedCode = false;
 
   while (cursor < text.length) {
-    const start = text.indexOf("$$", cursor);
-
-    if (start === -1 || isEscaped(text, start)) {
-      parts.push({ kind: "textBlock", text: text.slice(cursor) });
-      break;
+    const lineStart = cursor === 0 || text[cursor - 1] === "\n";
+    if (lineStart && text.startsWith("```", cursor)) {
+      inFencedCode = !inFencedCode;
+      const lineEnd = text.indexOf("\n", cursor);
+      cursor = lineEnd === -1 ? text.length : lineEnd + 1;
+      continue;
     }
 
-    const end = text.indexOf("$$", start + 2);
-    if (end === -1 || isEscaped(text, end)) {
-      parts.push({ kind: "textBlock", text: text.slice(cursor) });
-      break;
+    if (inFencedCode) {
+      cursor += 1;
+      continue;
     }
 
-    if (start > cursor) {
-      parts.push({ kind: "textBlock", text: text.slice(cursor, start) });
+    const blockMath = readBlockMath(text, cursor);
+    if (!blockMath) {
+      cursor += 1;
+      continue;
     }
 
-    const latex = text.slice(start + 2, end).trim();
-    if (latex.length) {
-      parts.push({ kind: "blockMath", latex });
+    if (cursor > lastTextStart) {
+      parts.push({ kind: "textBlock", text: text.slice(lastTextStart, cursor) });
     }
 
-    cursor = end + 2;
+    if (blockMath.latex.length) {
+      parts.push({ kind: "blockMath", latex: blockMath.latex });
+    }
+
+    cursor = blockMath.next;
+    lastTextStart = cursor;
+  }
+
+  if (lastTextStart < text.length) {
+    parts.push({ kind: "textBlock", text: text.slice(lastTextStart) });
   }
 
   return parts.length ? parts : [{ kind: "textBlock", text }];
