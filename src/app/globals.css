@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
+  /* Paleta clara inspirada en INGENIUM (crema cálido). */
+  --background: #f6f0e2;
   --foreground: #0f172a;
 }
 
