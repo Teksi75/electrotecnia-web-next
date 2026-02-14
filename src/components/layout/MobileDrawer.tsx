@@ -15,8 +15,8 @@ export function MobileDrawer() {
       </Button>
 
       {open ? (
-        <div className="fixed inset-0 z-50 bg-black/40" role="dialog" aria-modal="true">
-          <div className="h-full w-[85%] max-w-sm overflow-y-auto bg-white p-4 dark:bg-slate-950">
+        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm" role="dialog" aria-modal="true">
+          <div className="h-full w-[85%] max-w-sm overflow-y-auto border-r border-border bg-card p-4 text-card-foreground">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-sm font-semibold">Indice</h2>
               <Button type="button" variant="ghost" onClick={() => setOpen(false)}>

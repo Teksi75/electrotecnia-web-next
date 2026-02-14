@@ -15,7 +15,7 @@ export function PrevNext({ prev, next }: PrevNextProps) {
   }
 
   return (
-    <nav className="mt-12 grid gap-3 border-t border-slate-200 pt-6 dark:border-slate-800 sm:grid-cols-2">
+    <nav className="mt-12 grid gap-3 border-t border-border pt-6 sm:grid-cols-2">
       <div>
         {prev ? (
           <Button asChild variant="outline" className="w-full justify-start">

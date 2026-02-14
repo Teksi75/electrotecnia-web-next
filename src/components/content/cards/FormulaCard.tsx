@@ -11,7 +11,7 @@ export function FormulaCard({ block }: FormulaCardProps) {
       <h2 className="text-lg font-semibold text-amber-900 dark:text-amber-100">{block.title}</h2>
       {renderContentNodes(block.nodes ?? [], block.body, block.mono)}
       {block.items?.length ? (
-        <ul className="mt-3 list-disc space-y-1 pl-5 text-slate-700 dark:text-slate-300">
+        <ul className="mt-3 list-disc space-y-1 pl-5 text-muted-foreground">
           {block.items.map((item) => (
             <li key={item} className="font-mono text-sm">{item}</li>
           ))}
