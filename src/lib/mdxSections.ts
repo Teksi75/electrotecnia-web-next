@@ -13,7 +13,7 @@ const getBlockTypeByHeading = (heading: string): ContentBlock["type"] => {
 };
 
 const createNodesFromText = (text: string, mono?: boolean): { bodyTokens?: ContentBlock["bodyTokens"]; nodes?: ContentNode[] } => {
-  const hasMath = text.includes("$");
+  const hasMath = text.includes("$") || text.includes("\\(") || text.includes("\\[");
 
   if (!hasMath) {
     return {

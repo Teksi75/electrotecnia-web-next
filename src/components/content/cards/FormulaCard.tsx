@@ -13,7 +13,7 @@ export function FormulaCard({ block }: FormulaCardProps) {
       {block.items?.length ? (
         <ul className="mt-3 list-disc space-y-1 pl-5 text-slate-700 dark:text-slate-300">
           {block.items.map((item) => (
-            <li key={item} className="font-mono text-sm">{item}</li>
+            <li key={item} className="text-sm leading-relaxed">{item}</li>
           ))}
         </ul>
       ) : null}
