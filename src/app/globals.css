@@ -22,3 +22,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+.math-display mjx-container[jax="CHTML"][display="true"] {
+  margin: 0.65rem auto;
+}
+
+.math-display {
+  scrollbar-width: thin;
+}
