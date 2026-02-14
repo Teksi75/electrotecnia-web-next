@@ -21,13 +21,13 @@ export function SearchResults({ items, emptyText, onSelect }: SearchResultsProps
                 className="block rounded-md px-2 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 <p className="text-sm font-medium">{item.title}</p>
-                <p className="line-clamp-1 text-xs text-slate-600 dark:text-slate-300">{item.description}</p>
+                <p className="line-clamp-1 text-xs text-slate-800 dark:text-slate-300">{item.description}</p>
               </Link>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="px-2 py-1 text-sm text-slate-500 dark:text-slate-400">{emptyText}</p>
+        <p className="px-2 py-1 text-sm text-slate-600 dark:text-slate-400">{emptyText}</p>
       )}
     </div>
   );

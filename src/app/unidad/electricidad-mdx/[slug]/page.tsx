@@ -41,9 +41,9 @@ export default async function ElectricidadMdxPage({ params }: PageProps) {
   return (
     <article className="space-y-6">
       <header className="space-y-2 border-b border-slate-200 pb-6 dark:border-slate-800">
-        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Vista de prueba MDX</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-400">Vista de prueba MDX</p>
         <h1 className="text-3xl font-bold tracking-tight">{topic.title}</h1>
-        <p className="text-slate-600 dark:text-slate-300">{topic.description}</p>
+        <p className="text-slate-800 dark:text-slate-300">{topic.description}</p>
       </header>
 
       {!standardMdx.enabled && process.env.NODE_ENV !== "production" ? (
