@@ -21,32 +21,50 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
 
   const tokens: InlineToken[] = [];
   let cursor = 0;
+  let textBuffer = "";
+
+  const pushTextBuffer = () => {
+    if (textBuffer.length) {
+      tokens.push({ kind: "text", text: textBuffer });
+      textBuffer = "";
+    }
+  };
 
   while (cursor < text.length) {
-    const start = text.indexOf("$", cursor);
+    const currentChar = text[cursor];
 
-    if (start === -1) {
-      tokens.push({ kind: "text", text: text.slice(cursor) });
-      break;
-    }
-
-    if (isEscaped(text, start) || text[start + 1] === "$") {
-      cursor = start + 1;
+    if (currentChar === "\\" && text[cursor + 1] === "$") {
+      textBuffer += "$";
+      cursor += 2;
       continue;
     }
 
-    const end = text.indexOf("$", start + 1);
+    if (currentChar !== "$") {
+      textBuffer += currentChar;
+      cursor += 1;
+      continue;
+    }
 
-    if (end === -1 || isEscaped(text, end)) {
-      tokens.push({ kind: "text", text: text.slice(cursor) });
+    if (isEscaped(text, cursor) || text[cursor + 1] === "$") {
+      textBuffer += "$";
+      cursor += 1;
+      continue;
+    }
+
+    let end = cursor + 1;
+    while (end < text.length) {
+      if (text[end] === "$" && !isEscaped(text, end)) break;
+      end += 1;
+    }
+
+    if (end >= text.length) {
+      textBuffer += text.slice(cursor);
       break;
     }
 
-    if (start > cursor) {
-      tokens.push({ kind: "text", text: text.slice(cursor, start) });
-    }
+    pushTextBuffer();
 
-    const latex = text.slice(start + 1, end).trim();
+    const latex = text.slice(cursor + 1, end).trim();
     if (latex.length) {
       tokens.push({ kind: "inlineMath", latex });
     } else {
@@ -55,6 +73,8 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
 
     cursor = end + 1;
   }
+
+  pushTextBuffer();
 
   return tokens.length ? tokens : [{ kind: "text", text }];
 }

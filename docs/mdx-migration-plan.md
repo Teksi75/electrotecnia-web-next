@@ -78,3 +78,31 @@ Implementado en este PR:
 - Paridad completa de anchors hash en MDX (TOC/subtemas).
 - Definir fuente única de verdad para nav (frontmatter/manifest) para evitar duplicidad `nav.ts` vs contenido.
 - Extender indexado de búsqueda a MDX y validar cobertura de hashes.
+
+## Etapa 4 (incremental, sin romper flujo actual)
+
+Implementado en este PR:
+
+- Se reforzó el parser de secciones MDX en `src/lib/mdxSections.ts` para hacer flush de la subsección actual antes de cambiar a un nuevo heading `##`.
+- Se corrigió tokenización inline para `\$` en `src/lib/mathTokens.ts`, preservando texto literal antes de expresiones matemáticas.
+- Se agregó smoke test ejecutable con Node (`scripts/parse-smoke-test.mjs`) para cubrir ambos casos de robustez.
+- Se dejó scaffolding para pipeline estándar MDX:
+  - `src/mdx-components.tsx` con `<Formula>`, `<Ejemplo>` y `<Nota>`.
+  - `src/lib/mdxStandard.ts` para activar por flag (`NEXT_ENABLE_STANDARD_MDX=1`) y validar dependencias.
+  - Ruta paralela de prueba `/unidad/electricidad-mdx/[slug]` con fallback explícito al renderer actual.
+  - Demo MDX: `src/content/electricidad/demo-matematicas-mdx.mdx`.
+
+### Estado de dependencias estándar
+
+No fue posible instalar en este entorno: `@next/mdx`, `remark-math`, `rehype-katex` (error 403 al registry). Por eso:
+
+- Se mantiene el flujo actual como camino principal.
+- La ruta de prueba y el flag permiten completar la migración apenas estén disponibles los paquetes.
+
+### Siguientes pasos (tema por tema)
+
+1. Instalar dependencias bloqueadas y habilitar `NEXT_ENABLE_STANDARD_MDX=1`.
+2. Activar `@next/mdx` en `next.config.ts` con `remark-math` + `rehype-katex`.
+3. En la ruta `/unidad/electricidad-mdx/[slug]`, reemplazar el fallback por render estándar real para un tema piloto.
+4. Validar paridad visual/anchors con el renderer actual y migrar tema por tema.
+5. Cuando haya paridad total, retirar fallback progresivamente.
