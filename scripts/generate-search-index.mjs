@@ -11,8 +11,9 @@ const hrefMatches = [...navRaw.matchAll(/href:\s*"([^"]+)"/g)].map((m) => m[1]);
 const uniqueHrefs = [...new Set(hrefMatches)].filter((href) => href.startsWith("/unidad/electricidad/"));
 
 function parseFrontmatter(raw) {
-  const match = raw.match(/^---\n([\s\S]*?)\n---\n?/);
-  if (!match) return { frontmatter: {}, content: raw };
+  const normalized = raw.replace(/\r\n/g, "\n");
+  const match = normalized.match(/^---\n([\s\S]*?)\n---\n?/);
+  if (!match) return { frontmatter: {}, content: normalized };
 
   const frontmatter = {};
   for (const line of match[1].split("\n")) {
@@ -23,23 +24,7 @@ function parseFrontmatter(raw) {
     frontmatter[key] = value;
   }
 
-  return { frontmatter, content: raw.slice(match[0].length) };
-}
-
-function collectText(topic) {
-  const chunk = [];
-  for (const block of topic.blocks ?? []) {
-    if (block.body) chunk.push(block.body);
-    if (Array.isArray(block.items)) chunk.push(block.items.join(" "));
-  }
-  for (const section of topic.sections ?? []) {
-    chunk.push(section.title);
-    for (const block of section.blocks ?? []) {
-      if (block.body) chunk.push(block.body);
-      if (Array.isArray(block.items)) chunk.push(block.items.join(" "));
-    }
-  }
-  return chunk.join(" ");
+  return { frontmatter, content: normalized.slice(match[0].length) };
 }
 
 function parseMdxContent(content) {
@@ -78,18 +63,6 @@ async function readTopic(slug) {
       description: frontmatter.description ?? slug,
       bodyPlain,
       sections,
-    };
-  } catch {}
-
-  const jsonPath = path.join(contentDir, `${slug}.json`);
-  try {
-    const raw = await fs.readFile(jsonPath, "utf8");
-    const parsed = JSON.parse(raw);
-    return {
-      title: parsed.title,
-      description: parsed.description,
-      bodyPlain: collectText(parsed),
-      sections: (parsed.sections ?? []).map((s) => ({ id: s.id, title: s.title, text: (s.blocks ?? []).map((b) => b.body ?? "") })),
     };
   } catch {
     return null;

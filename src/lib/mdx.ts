@@ -71,7 +71,7 @@ async function readMdxBySlug(unit: string, slug: string): Promise<MdxTopic | nul
 
     if (!frontmatter?.title || !frontmatter.description || !frontmatter.part || frontmatter.order === undefined) {
       if (process.env.NODE_ENV !== "production") {
-        console.warn(`[mdx] Frontmatter invalido en ${filePath}. Se aplicara fallback a JSON.`);
+        console.warn(`[mdx] Frontmatter invalido en ${filePath}.`);
       }
       return null;
     }
@@ -90,12 +90,10 @@ async function readMdxBySlug(unit: string, slug: string): Promise<MdxTopic | nul
     const errorCode = typeof error === "object" && error && "code" in error ? String((error as { code?: unknown }).code) : "";
 
     if (process.env.NODE_ENV !== "production" && errorCode !== "ENOENT") {
-      console.warn(`[mdx] No se pudo leer/parsear ${filePath}. Se aplicara fallback a JSON.`);
+      console.warn(`[mdx] No se pudo leer/parsear ${filePath}.`);
     }
     return null;
   }
 }
 
 export const getMdxBySlug = cache(async (unit: string, slug: string): Promise<MdxTopic | null> => readMdxBySlug(unit, slug));
-
-export const getMdxBySlugUncached = (unit: string, slug: string): Promise<MdxTopic | null> => readMdxBySlug(unit, slug);
