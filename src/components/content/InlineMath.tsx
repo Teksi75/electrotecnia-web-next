@@ -20,7 +20,7 @@ export function InlineMath({ latex }: InlineMathProps) {
   const html = tryRenderInlineMath(latex);
 
   if (!html) {
-    return <code className="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-800">{latex}</code>;
+    return <code className="rounded bg-secondary px-1 py-0.5 text-xs">{latex}</code>;
   }
 
   return <span className="katex-inline" dangerouslySetInnerHTML={{ __html: html }} />;
