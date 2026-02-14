@@ -6,6 +6,18 @@
   - Ejemplo: `$1\\,\\mu C = 10^{-6}\\,C$`
 - **Math de bloque**: usar `$$...$$` para fórmulas destacadas (multilínea permitida).
   - Ejemplo: `$$|F| = k \\frac{|q_1 q_2|}{r^2}$$`
+- **Math de bloque alternativa**: también se acepta `\\[ ... \\]`.
+  - Ejemplo: `\\[ F = (9 \\times 10^9)\\frac{(2 \\times 10^{-6})(3 \\times 10^{-6})}{(0{,}50)^2} = 0{,}216\\,N \\]`
+
+## Cómo escribir fórmulas (guía corta para autores)
+
+- Inline en texto normal: `La carga es $q=2\\,\\mu C$`.
+- Bloque centrado: usar `$$...$$` o `\\[...\\]` en una línea separada.
+- No escribir LaTeX “suelto” sin delimitadores (por ejemplo `|F| = k \\frac{|q_1 q_2|}{r^2}`), porque se verá como texto crudo.
+- Si querés mostrar código literal de LaTeX, usá backticks: `` `\\frac{a}{b}` `` para evitar render matemático.
+- Ejemplos correctos:
+  - `$|F| = k \\frac{|q_1 q_2|}{r^2}$`
+  - `$1\\,\\mu C = 10^{-6}\\,C$`
 
 ## Escapar símbolo `$` literal
 

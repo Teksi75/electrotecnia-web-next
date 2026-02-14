@@ -22,6 +22,7 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
   const tokens: InlineToken[] = [];
   let cursor = 0;
   let textBuffer = "";
+  let inInlineCode = false;
 
   const pushTextBuffer = () => {
     if (textBuffer.length) {
@@ -39,7 +40,14 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
       continue;
     }
 
-    if (currentChar !== "$") {
+    if (currentChar === "`") {
+      inInlineCode = !inInlineCode;
+      textBuffer += currentChar;
+      cursor += 1;
+      continue;
+    }
+
+    if (currentChar !== "$" || inInlineCode) {
       textBuffer += currentChar;
       cursor += 1;
       continue;
@@ -79,7 +87,60 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
   return tokens.length ? tokens : [{ kind: "text", text }];
 }
 
+function splitByBracketBlockMath(text: string): Array<TextBlockToken | BlockToken> {
+  if (!text.includes("\\[") || !text.includes("\\]")) {
+    return [{ kind: "textBlock", text }];
+  }
+
+  const parts: Array<TextBlockToken | BlockToken> = [];
+  let cursor = 0;
+
+  while (cursor < text.length) {
+    const start = text.indexOf("\\[", cursor);
+
+    if (start === -1 || isEscaped(text, start)) {
+      parts.push({ kind: "textBlock", text: text.slice(cursor) });
+      break;
+    }
+
+    const end = text.indexOf("\\]", start + 2);
+    if (end === -1 || isEscaped(text, end)) {
+      parts.push({ kind: "textBlock", text: text.slice(cursor) });
+      break;
+    }
+
+    if (start > cursor) {
+      parts.push({ kind: "textBlock", text: text.slice(cursor, start) });
+    }
+
+    const latex = text.slice(start + 2, end).trim();
+    if (latex.length) {
+      parts.push({ kind: "blockMath", latex });
+    }
+
+    cursor = end + 2;
+  }
+
+  return parts.length ? parts : [{ kind: "textBlock", text }];
+}
+
 export function splitBlockMath(text: string): Array<TextBlockToken | BlockToken> {
+  const dollarSplit = splitByDollarBlockMath(text);
+  const output: Array<TextBlockToken | BlockToken> = [];
+
+  for (const part of dollarSplit) {
+    if (part.kind === "blockMath") {
+      output.push(part);
+      continue;
+    }
+
+    output.push(...splitByBracketBlockMath(part.text));
+  }
+
+  return output.length ? output : [{ kind: "textBlock", text }];
+}
+
+function splitByDollarBlockMath(text: string): Array<TextBlockToken | BlockToken> {
   if (!text.includes("$$")) {
     return [{ kind: "textBlock", text }];
   }

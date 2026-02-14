@@ -22,3 +22,24 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+.katex {
+  font-size: 1.08em;
+}
+
+.katex-inline .katex {
+  line-height: 1.45;
+}
+
+.katex-block .katex-display {
+  margin: 0.5rem 0;
+}
+
+.katex-block {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.6) transparent;
+}
+
+.dark .katex {
+  color: #e2e8f0;
+}
