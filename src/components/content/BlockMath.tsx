@@ -1,14 +1,11 @@
+import katex from "katex";
+
 type BlockMathProps = {
   latex: string;
 };
 
 function tryRenderBlockMath(latex: string) {
   try {
-    const katexModuleName = "katex";
-    const katex = (Function("moduleName", "return require(moduleName);") as (moduleName: string) => {
-      renderToString: (input: string, options: Record<string, unknown>) => string;
-    })(katexModuleName);
-
     return katex.renderToString(latex, {
       displayMode: true,
       throwOnError: false,
@@ -32,7 +29,7 @@ export function BlockMath({ latex }: BlockMathProps) {
 
   return (
     <div className="my-3 overflow-x-auto rounded-md bg-slate-100/80 px-3 py-2 dark:bg-slate-800/80">
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <div className="min-w-max" dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );
 }
