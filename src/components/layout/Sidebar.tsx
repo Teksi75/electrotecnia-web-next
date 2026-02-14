@@ -42,8 +42,8 @@ function NodeItem({
           depth > 0 && "ml-3",
           node.isPage && "font-medium",
           active
-            ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
-            : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white",
+            ? "bg-accent/60 text-foreground font-semibold"
+            : "text-muted-foreground hover:bg-accent/40 hover:text-foreground",
         )}
       >
         {node.title}
