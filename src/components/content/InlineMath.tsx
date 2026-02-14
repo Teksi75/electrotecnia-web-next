@@ -26,5 +26,5 @@ export function InlineMath({ latex }: InlineMathProps) {
     return <code className="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-800">{latex}</code>;
   }
 
-  return <span className="katex-inline" dangerouslySetInnerHTML={{ __html: html }} />;
+  return <span className="katex-inline text-[1.03em]" dangerouslySetInnerHTML={{ __html: html }} />;
 }
