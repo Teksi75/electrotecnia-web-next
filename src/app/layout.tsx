@@ -5,7 +5,6 @@ import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { siteConfig } from "@/config/site";
 import { BASE_URL } from "@/lib/seo";
 
-import "katex/dist/katex.min.css";
 import "./globals.css";
 
 export const metadata: Metadata = {

@@ -30,7 +30,20 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
       break;
     }
 
-    if (isEscaped(text, start) || text[start + 1] === "$") {
+    if (isEscaped(text, start)) {
+      if (start - 1 >= cursor) {
+        tokens.push({ kind: "text", text: text.slice(cursor, start - 1) });
+      }
+      tokens.push({ kind: "text", text: "$" });
+      cursor = start + 1;
+      continue;
+    }
+
+    if (text[start + 1] === "$") {
+      if (start > cursor) {
+        tokens.push({ kind: "text", text: text.slice(cursor, start) });
+      }
+      tokens.push({ kind: "text", text: "$" });
       cursor = start + 1;
       continue;
     }
