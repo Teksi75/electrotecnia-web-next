@@ -40,10 +40,10 @@ export default async function ElectricidadMdxPage({ params }: PageProps) {
 
   return (
     <article className="space-y-6">
-      <header className="space-y-2 border-b border-slate-200 pb-6 dark:border-slate-800">
-        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Vista de prueba MDX</p>
+      <header className="space-y-2 border-b border-border pb-6">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Vista de prueba MDX</p>
         <h1 className="text-3xl font-bold tracking-tight">{topic.title}</h1>
-        <p className="text-slate-600 dark:text-slate-300">{topic.description}</p>
+        <p className="text-muted-foreground">{topic.description}</p>
       </header>
 
       {!standardMdx.enabled && process.env.NODE_ENV !== "production" ? (
@@ -62,7 +62,7 @@ export default async function ElectricidadMdxPage({ params }: PageProps) {
       {topic.blocks.map((block, index) => <BlockCard key={`${block.type}-${index}`} block={block} />)}
 
       {topic.sections?.map((section) => (
-        <section key={section.id} id={section.id} className="scroll-mt-24 space-y-4 rounded-xl border border-slate-200 p-5 dark:border-slate-800">
+        <section key={section.id} id={section.id} className="scroll-mt-24 space-y-4 rounded-xl border border-border bg-card p-5 text-card-foreground">
           <h2 className="text-xl font-semibold">{section.title}</h2>
           {section.blocks.map((block, index) => <BlockCard key={`${section.id}-${block.type}-${index}`} block={block} />)}
         </section>

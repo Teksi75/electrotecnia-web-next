@@ -21,14 +21,14 @@ export function BlockMath({ latex }: BlockMathProps) {
 
   if (!html) {
     return (
-      <div className="my-3 overflow-x-auto rounded-md bg-slate-100/80 px-3 py-2 font-mono text-sm dark:bg-slate-800/80">
+      <div className="my-3 overflow-x-auto rounded-md bg-muted/70 px-3 py-2 font-mono text-sm text-foreground">
         {latex}
       </div>
     );
   }
 
   return (
-    <div className="my-3 overflow-x-auto rounded-md bg-slate-100/80 px-3 py-2 dark:bg-slate-800/80">
+    <div className="my-3 overflow-x-auto rounded-md bg-muted/70 px-3 py-2 text-foreground">
       <div className="min-w-max" dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );

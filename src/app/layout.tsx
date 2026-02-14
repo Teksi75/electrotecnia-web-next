@@ -36,7 +36,7 @@ export default function RootLayout({
           <div className="min-h-screen bg-background text-foreground">
             <Header />
             <div className="pb-12">{children}</div>
-            <footer className="border-t border-slate-200 py-4 text-center text-sm text-slate-500 dark:border-slate-800">
+            <footer className="border-t border-border py-4 text-center text-sm text-muted-foreground">
               Material de consulta (Electrotecnia)
             </footer>
           </div>

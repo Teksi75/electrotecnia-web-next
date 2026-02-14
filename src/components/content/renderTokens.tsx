@@ -18,7 +18,7 @@ export function renderInlineTokens(tokens: InlineToken[]): ReactNode[] {
 
 export function renderContentNodes(nodes: ContentNode[], fallbackBody?: string, mono?: boolean): ReactNode {
   if (!nodes.length) {
-    return fallbackBody ? <p className={mono ? "mt-2 font-mono text-sm whitespace-pre-wrap" : "mt-2 text-slate-700 dark:text-slate-300 whitespace-pre-wrap"}>{fallbackBody}</p> : null;
+    return fallbackBody ? <p className={mono ? "mt-2 font-mono text-sm whitespace-pre-wrap" : "mt-2 text-muted-foreground whitespace-pre-wrap"}>{fallbackBody}</p> : null;
   }
 
   return nodes.map((node, index) => {
@@ -27,7 +27,7 @@ export function renderContentNodes(nodes: ContentNode[], fallbackBody?: string, 
     }
 
     return (
-      <p key={`paragraph-${index}`} className={node.mono ? "mt-2 font-mono text-sm whitespace-pre-wrap" : "mt-2 text-slate-700 dark:text-slate-300 whitespace-pre-wrap"}>
+      <p key={`paragraph-${index}`} className={node.mono ? "mt-2 font-mono text-sm whitespace-pre-wrap" : "mt-2 text-muted-foreground whitespace-pre-wrap"}>
         {renderInlineTokens(node.tokens)}
       </p>
     );
