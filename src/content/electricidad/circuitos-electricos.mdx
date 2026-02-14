@@ -15,27 +15,32 @@ Los elementos del circuito se pueden conectar en serie, en paralelo o en forma m
 
 ## Ejemplo numérico (SI)
 
-Una batería de 12 V conectada a un resistor establece una diferencia de potencial que permite el paso de corriente.
+Una batería de \(12\,\mathrm{V}\) conectada a un resistor establece una diferencia de potencial que permite el paso de corriente.
 
 ## Fórmulas
 
-- Req(serie) = R1 + R2 + ...
-- 1 / Req(paralelo) = 1 / R1 + 1 / R2 + ...
+\[
+R_{\mathrm{eq}(\mathrm{serie})} = R_1 + R_2 + \cdots
+\]
+
+\[
+\frac{1}{R_{\mathrm{eq}(\mathrm{paralelo})}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots
+\]
 
 ### Circuitos en serie {#circuitos-en-serie}
 
-En serie, la resistencia equivalente es la suma de las resistencias: Req = R1 + R2.
+En serie, la resistencia equivalente es la suma de las resistencias: \(R_{\mathrm{eq}} = R_1 + R_2\).
 
-Si R1 = 4 Ω y R2 = 6 Ω, entonces Req = 10 Ω. Con V = 10 V, la corriente total es I = V / Req = 1 A.
+Si \(R_1 = 4\,\Omega\) y \(R_2 = 6\,\Omega\), entonces \(R_{\mathrm{eq}} = 10\,\Omega\). Con \(V = 10\,\mathrm{V}\), la corriente total es \(I = \frac{V}{R_{\mathrm{eq}}} = 1\,\mathrm{A}\).
 
 ### Circuitos en paralelo {#circuitos-en-paralelo}
 
-En paralelo, la inversa de la resistencia equivalente es la suma de inversas: 1/Req = 1/R1 + 1/R2.
+En paralelo, la inversa de la resistencia equivalente es la suma de inversas: \(\frac{1}{R_{\mathrm{eq}}} = \frac{1}{R_1} + \frac{1}{R_2}\).
 
-Si R1 = 6 Ω y R2 = 3 Ω, entonces Req = 2 Ω. Con V = 12 V, la corriente total es I = 12 / 2 = 6 A.
+Si \(R_1 = 6\,\Omega\) y \(R_2 = 3\,\Omega\), entonces \(R_{\mathrm{eq}} = 2\,\Omega\). Con \(V = 12\,\mathrm{V}\), la corriente total es \(I = \frac{12}{2} = 6\,\mathrm{A}\).
 
 ### Circuitos mixtos {#circuitos-mixtos}
 
 Un circuito mixto combina conexiones en serie y en paralelo.
 
-Si R1 = 2 Ω está en serie con un paralelo de 6 Ω y 3 Ω, primero se calcula el paralelo: 6 Ω || 3 Ω = 2 Ω. Luego, Req total = 2 Ω + 2 Ω = 4 Ω.
+Si \(R_1 = 2\,\Omega\) está en serie con un paralelo de \(6\,\Omega\) y \(3\,\Omega\), primero se calcula el paralelo: \(6\,\Omega\,\|\|\,3\,\Omega = 2\,\Omega\). Luego, \(R_{\mathrm{eq\ total}} = 2\,\Omega + 2\,\Omega = 4\,\Omega\).
