@@ -16,7 +16,7 @@ export function Collapsible({ title, children, defaultOpen = false, className }:
   const contentId = useId();
 
   return (
-    <section className={cn("rounded-lg border border-slate-200 p-2 dark:border-slate-800", className)}>
+    <section className={cn("rounded-lg border border-slate-300 bg-white/90 p-2 shadow-sm dark:border-slate-800", className)}>
       <button
         type="button"
         className="flex w-full items-center justify-between px-1 py-1 text-left text-sm font-semibold"
@@ -25,7 +25,7 @@ export function Collapsible({ title, children, defaultOpen = false, className }:
         onClick={() => setOpen((value) => !value)}
       >
         {title}
-        <span className="text-xs text-slate-500">{open ? "Ocultar" : "Mostrar"}</span>
+        <span className="text-xs text-slate-600">{open ? "Ocultar" : "Mostrar"}</span>
       </button>
       {open ? (
         <div id={contentId} className="pt-2">
