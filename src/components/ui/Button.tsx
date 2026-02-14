@@ -1,8 +1,8 @@
-﻿import * as React from "react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-type Variant = "solid" | "outline" | "ghost";
+type Variant = "default" | "secondary" | "outline" | "ghost";
 
 type ButtonAsButton = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: Variant;
@@ -17,21 +17,21 @@ type ButtonAsChild = {
 };
 
 const variants: Record<Variant, string> = {
-  solid: "bg-slate-900 text-white hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-300",
-  outline:
-    "border border-slate-300 bg-transparent text-slate-900 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800",
-  ghost: "bg-transparent text-slate-700 hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800",
+  default: "bg-primary text-primary-foreground hover:bg-primary/85 focus-visible:ring-2 focus-visible:ring-ring",
+  secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/85 focus-visible:ring-2 focus-visible:ring-ring",
+  outline: "border border-border bg-background text-foreground hover:bg-accent/60 focus-visible:ring-2 focus-visible:ring-ring",
+  ghost: "bg-transparent text-muted-foreground hover:bg-accent/60 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring",
 };
 
 export function Button(props: ButtonAsButton | ButtonAsChild) {
-  const variant = props.variant ?? "solid";
+  const variant = props.variant ?? "default";
 
   if (props.asChild) {
     const { children, className } = props;
 
     return React.cloneElement(children, {
       className: cn(
-        "inline-flex h-10 items-center rounded-md px-4 text-sm font-medium transition-colors",
+        "inline-flex h-10 items-center rounded-md px-4 text-sm font-medium transition-colors focus-visible:outline-none",
         variants[variant],
         className,
         children.props.className,
@@ -44,7 +44,7 @@ export function Button(props: ButtonAsButton | ButtonAsChild) {
   return (
     <button
       className={cn(
-        "inline-flex h-10 items-center rounded-md px-4 text-sm font-medium transition-colors",
+        "inline-flex h-10 items-center rounded-md px-4 text-sm font-medium transition-colors focus-visible:outline-none",
         variants[variant],
         className,
       )}
