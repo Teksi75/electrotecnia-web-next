@@ -78,3 +78,19 @@ Implementado en este PR:
 - Paridad completa de anchors hash en MDX (TOC/subtemas).
 - Definir fuente única de verdad para nav (frontmatter/manifest) para evitar duplicidad `nav.ts` vs contenido.
 - Extender indexado de búsqueda a MDX y validar cobertura de hashes.
+
+## Etapa 4 (incremental, sin ruptura)
+
+Implementado en este PR:
+
+- Se reforzó el parser actual para no perder subsecciones `###` cuando aparece un nuevo heading `##`.
+- Se corrigió el tokenizador inline para preservar `\$` como texto literal.
+- Se agregó `scripts/parse-smoke-test.mjs` para validar ambos casos críticos.
+- Se dejó scaffolding de pipeline MDX estándar detrás de verificación de dependencias (`@next/mdx`, `remark-math`, `rehype-katex`).
+- Se creó `mdx-components.tsx` con componentes `Formula`, `Ejemplo` y `Nota`.
+- Se agregó ruta paralela `/unidad/electricidad-mdx/[slug]` y demo `src/content/mdx-demo/demo-electricidad.mdx`.
+
+Limitación del entorno en esta corrida:
+
+- La instalación de dependencias MDX falló por política del registry (`403 Forbidden`), por lo que el pipeline estándar no quedó activado en build.
+- Se mantuvo el flujo actual intacto y funcional como fallback.
