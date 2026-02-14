@@ -38,12 +38,12 @@ function NodeItem({
         href={node.href}
         onClick={onNavigate}
         className={cn(
-          "block rounded-md px-2 py-1.5 text-sm transition-colors",
+          "block rounded-md px-2 py-1.5 text-sm transition-colors duration-150",
           depth > 0 && "ml-3",
           node.isPage && "font-medium",
           active
-            ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
-            : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white",
+            ? "bg-slate-900 text-white shadow-sm dark:bg-slate-100 dark:text-slate-900"
+            : "text-slate-900 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white",
         )}
       >
         {node.title}
