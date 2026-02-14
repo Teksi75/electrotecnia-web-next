@@ -25,7 +25,8 @@ function parseScalar(value: string): string | number {
 }
 
 function parseFrontmatter(raw: string) {
-  const match = raw.match(/^---\n([\s\S]*?)\n---\n?/);
+  const normalizedRaw = raw.replace(/\r\n/g, "\n");
+  const match = normalizedRaw.match(/^---\n([\s\S]*?)\n---\n?/);
 
   if (!match) {
     return { frontmatter: null, content: raw };
@@ -45,7 +46,7 @@ function parseFrontmatter(raw: string) {
 
   return {
     frontmatter: frontmatter as Partial<MdxFrontmatter>,
-    content: raw.slice(match[0].length),
+    content: normalizedRaw.slice(match[0].length),
   };
 }
 
@@ -69,6 +70,9 @@ async function readMdxBySlug(unit: string, slug: string): Promise<MdxTopic | nul
     const { frontmatter, content } = parseFrontmatter(raw);
 
     if (!frontmatter?.title || !frontmatter.description || !frontmatter.part || frontmatter.order === undefined) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn(`[mdx] Frontmatter invalido en ${filePath}. Se aplicara fallback a JSON.`);
+      }
       return null;
     }
 
@@ -82,7 +86,12 @@ async function readMdxBySlug(unit: string, slug: string): Promise<MdxTopic | nul
       },
       content,
     };
-  } catch {
+  } catch (error) {
+    const errorCode = typeof error === "object" && error && "code" in error ? String((error as { code?: unknown }).code) : "";
+
+    if (process.env.NODE_ENV !== "production" && errorCode !== "ENOENT") {
+      console.warn(`[mdx] No se pudo leer/parsear ${filePath}. Se aplicara fallback a JSON.`);
+    }
     return null;
   }
 }

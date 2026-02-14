@@ -5,8 +5,10 @@ import { EjemploCard } from "@/components/content/cards/EjemploCard";
 import { ExplicacionCard } from "@/components/content/cards/ExplicacionCard";
 import { FormulaCard } from "@/components/content/cards/FormulaCard";
 import { IdeaClaveCard } from "@/components/content/cards/IdeaClaveCard";
+import { PrevNext } from "@/components/layout/PrevNext";
 import { getTopicContentBySlugUncached } from "@/lib/content";
 import { getMdxBySlugUncached } from "@/lib/mdx";
+import { getPrevNextBySlug, getTopicBySlug } from "@/lib/nav";
 import { getStandardMdxAvailability } from "@/lib/mdxStandard";
 import type { ContentBlock } from "@/types";
 
@@ -42,6 +44,8 @@ export default async function ElectricidadMdxPage({ params }: PageProps) {
 
   const mdxTopic = await getMdxBySlugUncached("electricidad", slug);
   const standardMdx = getStandardMdxAvailability();
+  const currentTopic = getTopicBySlug(slug);
+  const { prev, next } = getPrevNextBySlug(slug);
 
   return (
     <article className="space-y-6">
@@ -72,6 +76,8 @@ export default async function ElectricidadMdxPage({ params }: PageProps) {
           {section.blocks.map((block, index) => <BlockCard key={`${section.id}-${block.type}-${index}`} block={block} />)}
         </section>
       ))}
+
+      {currentTopic ? <PrevNext prev={prev} next={next} /> : null}
     </article>
   );
 }
