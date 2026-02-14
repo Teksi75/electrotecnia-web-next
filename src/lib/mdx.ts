@@ -60,7 +60,7 @@ export const getAllMdxSlugs = cache(async (unit: string) => {
     .sort();
 });
 
-export const getMdxBySlug = cache(async (unit: string, slug: string): Promise<MdxTopic | null> => {
+async function readMdxBySlug(unit: string, slug: string): Promise<MdxTopic | null> {
   const fs = await import("node:fs/promises");
   const filePath = path.join(CONTENT_ROOT, unit, `${slug}.mdx`);
 
@@ -85,4 +85,8 @@ export const getMdxBySlug = cache(async (unit: string, slug: string): Promise<Md
   } catch {
     return null;
   }
-});
+}
+
+export const getMdxBySlug = cache(async (unit: string, slug: string): Promise<MdxTopic | null> => readMdxBySlug(unit, slug));
+
+export const getMdxBySlugUncached = (unit: string, slug: string): Promise<MdxTopic | null> => readMdxBySlug(unit, slug);

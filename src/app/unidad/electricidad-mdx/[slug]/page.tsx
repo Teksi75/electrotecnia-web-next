@@ -1,17 +1,21 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { notFound } from "next/navigation";
 
 import { EjemploCard } from "@/components/content/cards/EjemploCard";
 import { ExplicacionCard } from "@/components/content/cards/ExplicacionCard";
 import { FormulaCard } from "@/components/content/cards/FormulaCard";
 import { IdeaClaveCard } from "@/components/content/cards/IdeaClaveCard";
-import { getTopicContentBySlug } from "@/lib/content";
-import { getMdxBySlug } from "@/lib/mdx";
+import { getTopicContentBySlugUncached } from "@/lib/content";
+import { getMdxBySlugUncached } from "@/lib/mdx";
 import { getStandardMdxAvailability } from "@/lib/mdxStandard";
 import type { ContentBlock } from "@/types";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 function BlockCard({ block }: { block: ContentBlock }) {
   if (block.type === "idea") {
@@ -30,12 +34,13 @@ function BlockCard({ block }: { block: ContentBlock }) {
 }
 
 export default async function ElectricidadMdxPage({ params }: PageProps) {
+  noStore();
   const { slug } = await params;
-  const topic = await getTopicContentBySlug(slug);
+  const topic = await getTopicContentBySlugUncached(slug);
 
   if (!topic) notFound();
 
-  const mdxTopic = await getMdxBySlug("electricidad", slug);
+  const mdxTopic = await getMdxBySlugUncached("electricidad", slug);
   const standardMdx = getStandardMdxAvailability();
 
   return (

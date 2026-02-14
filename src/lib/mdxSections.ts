@@ -2,12 +2,17 @@ import { splitBlockMath, tokenizeInlineMath } from "./mathTokens";
 import type { ContentBlock, ContentNode, TopicContent } from "@/types";
 
 const getBlockTypeByHeading = (heading: string): ContentBlock["type"] => {
-  const normalized = heading.trim().toLowerCase();
+  const normalized = heading
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "");
 
   if (normalized === "idea clave") return "idea";
-  if (normalized === "mini explicación" || normalized === "explicación") return "explain";
-  if (normalized === "ejemplo numérico (si)") return "example";
-  if (normalized === "fórmulas" || normalized === "formulas") return "formulas";
+  if (normalized === "mini explicacion" || normalized === "explicacion") return "explain";
+  if (normalized === "significado de las variables" || normalized === "constante de coulomb") return "explain";
+  if (normalized === "ejemplo numerico (si)") return "example";
+  if (normalized === "formulas") return "formulas";
 
   return "formulas";
 };
@@ -69,7 +74,7 @@ export function parseMdxSections(content: string): Pick<TopicContent, "blocks" |
     sections.push({
       id: currentSection.id,
       title: currentSection.title,
-      blocks: currentSection.lines.map((body, index) => toContentBlock(index === 0 ? "Explicación" : "Ejemplo numérico (SI)", body, index > 0)),
+      blocks: currentSection.lines.map((body, index) => toContentBlock(index === 0 ? "Explicacion" : "Ejemplo numerico (SI)", body, index > 0)),
     });
   };
 

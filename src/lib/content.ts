@@ -1,7 +1,7 @@
 import path from "node:path";
 import { cache } from "react";
 
-import { getMdxBySlug } from "@/lib/mdx";
+import { getMdxBySlug, getMdxBySlugUncached } from "@/lib/mdx";
 import { parseMdxSections } from "@/lib/mdxSections";
 import type { TopicContent } from "@/types";
 
@@ -13,8 +13,8 @@ export const getAllTopicSlugs = cache(async () => {
   return [...new Set(files.filter((file) => /\.(json|mdx)$/.test(file)).map((file) => file.replace(/\.(json|mdx)$/, "")))].sort();
 });
 
-export const getTopicContentBySlug = cache(async (slug: string): Promise<TopicContent | null> => {
-  const mdxTopic = await getMdxBySlug("electricidad", slug);
+async function readTopicContentBySlug(slug: string, useUncachedMdx = false): Promise<TopicContent | null> {
+  const mdxTopic = useUncachedMdx ? await getMdxBySlugUncached("electricidad", slug) : await getMdxBySlug("electricidad", slug);
 
   if (mdxTopic) {
     return {
@@ -35,5 +35,9 @@ export const getTopicContentBySlug = cache(async (slug: string): Promise<TopicCo
   } catch {
     return null;
   }
-});
+}
+
+export const getTopicContentBySlug = cache(async (slug: string): Promise<TopicContent | null> => readTopicContentBySlug(slug));
+
+export const getTopicContentBySlugUncached = (slug: string): Promise<TopicContent | null> => readTopicContentBySlug(slug, true);
 
