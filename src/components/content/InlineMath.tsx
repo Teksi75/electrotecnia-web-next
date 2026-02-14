@@ -1,14 +1,11 @@
+import katex from "katex";
+
 type InlineMathProps = {
   latex: string;
 };
 
 function tryRenderInlineMath(latex: string) {
   try {
-    const katexModuleName = "katex";
-    const katex = (Function("moduleName", "return require(moduleName);") as (moduleName: string) => {
-      renderToString: (input: string, options: Record<string, unknown>) => string;
-    })(katexModuleName);
-
     return katex.renderToString(latex, {
       displayMode: false,
       throwOnError: false,

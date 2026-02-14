@@ -14,6 +14,34 @@ const isEscaped = (text: string, index: number) => {
   return backslashes % 2 === 1;
 };
 
+const isInsideInlineCode = (text: string, index: number) => {
+  let inCode = false;
+
+  for (let i = 0; i < index; i += 1) {
+    if (text[i] !== "`") continue;
+    if (isEscaped(text, i)) continue;
+    inCode = !inCode;
+  }
+
+  return inCode;
+};
+
+const isInsideFencedCode = (text: string, index: number) => {
+  let inFence = false;
+
+  for (let i = 0; i < index; i += 1) {
+    if (text[i] !== "`") continue;
+    if (text.slice(i, i + 3) !== "```") continue;
+    if (isEscaped(text, i)) continue;
+    inFence = !inFence;
+    i += 2;
+  }
+
+  return inFence;
+};
+
+const isInsideCode = (text: string, index: number) => isInsideInlineCode(text, index) || isInsideFencedCode(text, index);
+
 export function tokenizeInlineMath(text: string): InlineToken[] {
   if (!text.includes("$")) {
     return [{ kind: "text", text }];
@@ -45,7 +73,7 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
       continue;
     }
 
-    if (isEscaped(text, cursor) || text[cursor + 1] === "$") {
+    if (isEscaped(text, cursor) || text[cursor + 1] === "$" || isInsideCode(text, cursor)) {
       textBuffer += "$";
       cursor += 1;
       continue;
@@ -53,7 +81,7 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
 
     let end = cursor + 1;
     while (end < text.length) {
-      if (text[end] === "$" && !isEscaped(text, end)) break;
+      if (text[end] === "$" && !isEscaped(text, end) && !isInsideCode(text, end)) break;
       end += 1;
     }
 
@@ -90,13 +118,13 @@ export function splitBlockMath(text: string): Array<TextBlockToken | BlockToken>
   while (cursor < text.length) {
     const start = text.indexOf("$$", cursor);
 
-    if (start === -1 || isEscaped(text, start)) {
+    if (start === -1 || isEscaped(text, start) || isInsideCode(text, start)) {
       parts.push({ kind: "textBlock", text: text.slice(cursor) });
       break;
     }
 
     const end = text.indexOf("$$", start + 2);
-    if (end === -1 || isEscaped(text, end)) {
+    if (end === -1 || isEscaped(text, end) || isInsideCode(text, end)) {
       parts.push({ kind: "textBlock", text: text.slice(cursor) });
       break;
     }
