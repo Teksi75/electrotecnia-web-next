@@ -12,12 +12,72 @@ const uniqueHrefs = [...new Set(hrefMatches)].filter((href) => href.startsWith("
 
 const cache = new Map();
 
+function parseFrontmatter(raw) {
+  const match = raw.match(/^---\n([\s\S]*?)\n---\n?/);
+  if (!match) return { frontmatter: null, content: raw };
+
+  const frontmatter = {};
+  for (const line of match[1].split("\n")) {
+    const idx = line.indexOf(":");
+    if (idx === -1) continue;
+    frontmatter[line.slice(0, idx).trim()] = line.slice(idx + 1).trim().replace(/^['\"]|['\"]$/g, "");
+  }
+
+  return { frontmatter, content: raw.slice(match[0].length) };
+}
+
+function stripMdx(content) {
+  return content
+    .replace(/^#{2,3}\s+/gm, "")
+    .replace(/\s*\{#[\w-]+\}\s*$/gm, "")
+    .replace(/^[-*]\s+/gm, "")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\n+/g, " ")
+    .trim();
+}
+
 async function readTopic(slug) {
   if (cache.has(slug)) return cache.get(slug);
-  const filePath = path.join(contentDir, `${slug}.json`);
+
+  const mdxPath = path.join(contentDir, `${slug}.mdx`);
   try {
-    const raw = await fs.readFile(filePath, "utf8");
-    const parsed = JSON.parse(raw);
+    const rawMdx = await fs.readFile(mdxPath, "utf8");
+    const { frontmatter, content } = parseFrontmatter(rawMdx);
+    const parsed = {
+      source: "mdx",
+      title: frontmatter?.title,
+      description: frontmatter?.description,
+      bodyPlain: stripMdx(content),
+      content,
+    };
+    cache.set(slug, parsed);
+    return parsed;
+  } catch {}
+
+  const jsonPath = path.join(contentDir, `${slug}.json`);
+  try {
+    const raw = await fs.readFile(jsonPath, "utf8");
+    const topic = JSON.parse(raw);
+    const chunk = [];
+    for (const block of topic.blocks ?? []) {
+      if (block.body) chunk.push(block.body);
+      if (Array.isArray(block.items)) chunk.push(block.items.join(" "));
+    }
+    for (const section of topic.sections ?? []) {
+      chunk.push(section.title);
+      for (const block of section.blocks ?? []) {
+        if (block.body) chunk.push(block.body);
+        if (Array.isArray(block.items)) chunk.push(block.items.join(" "));
+      }
+    }
+    const parsed = {
+      source: "json",
+      title: topic.title,
+      description: topic.description,
+      bodyPlain: chunk.join(" "),
+      topic,
+    };
     cache.set(slug, parsed);
     return parsed;
   } catch {
@@ -25,39 +85,48 @@ async function readTopic(slug) {
   }
 }
 
-function collectText(topic) {
-  const chunk = [];
-  for (const block of topic.blocks ?? []) {
-    if (block.body) chunk.push(block.body);
-    if (Array.isArray(block.items)) chunk.push(block.items.join(" "));
-  }
-  for (const section of topic.sections ?? []) {
-    chunk.push(section.title);
-    for (const block of section.blocks ?? []) {
-      if (block.body) chunk.push(block.body);
-      if (Array.isArray(block.items)) chunk.push(block.items.join(" "));
-    }
-  }
-  return chunk.join(" ");
+function extractMdxSection(content, hash) {
+  if (!hash) return null;
+  const escaped = hash.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`^###\\s+(.+?)\\s+\\{#${escaped}\\}\\s*$`, "m");
+  const match = content.match(re);
+  if (!match) return null;
+
+  const start = match.index + match[0].length;
+  const rest = content.slice(start);
+  const next = rest.search(/^###\s+/m);
+  const sectionBody = (next === -1 ? rest : rest.slice(0, next)).trim();
+  return { title: match[1], body: stripMdx(sectionBody) };
 }
 
 const entries = [];
 for (const href of uniqueHrefs) {
-  const slug = href.split("#")[0].split("/").pop();
+  const [base, hash] = href.split("#");
+  const slug = base.split("/").pop();
   if (!slug) continue;
+
   const topic = await readTopic(slug);
   if (!topic) continue;
-  const hash = href.includes("#") ? href.split("#")[1] : null;
+
   let title = topic.title;
   let description = topic.description;
-  let bodyPlain = collectText(topic);
+  let bodyPlain = topic.bodyPlain;
 
-  if (hash && topic.sections) {
-    const section = topic.sections.find((item) => item.id === hash);
-    if (section) {
-      title = section.title;
-      description = `${section.title} · ${topic.title}`;
-      bodyPlain = `${collectText(topic)} ${section.blocks.map((b) => b.body ?? "").join(" ")}`;
+  if (hash) {
+    if (topic.source === "mdx") {
+      const section = extractMdxSection(topic.content, hash);
+      if (section) {
+        title = section.title;
+        description = `${section.title} · ${topic.title}`;
+        bodyPlain = `${topic.bodyPlain} ${section.body}`.trim();
+      }
+    } else if (topic.topic?.sections) {
+      const section = topic.topic.sections.find((item) => item.id === hash);
+      if (section) {
+        title = section.title;
+        description = `${section.title} · ${topic.topic.title}`;
+        bodyPlain = `${topic.bodyPlain} ${section.blocks.map((b) => b.body ?? "").join(" ")}`;
+      }
     }
   }
 
