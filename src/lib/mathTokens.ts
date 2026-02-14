@@ -20,37 +20,52 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
   }
 
   const tokens: InlineToken[] = [];
+  const pushText = (value: string) => {
+    if (!value) return;
+    const last = tokens.at(-1);
+    if (last?.kind === "text") {
+      last.text += value;
+      return;
+    }
+
+    tokens.push({ kind: "text", text: value });
+  };
   let cursor = 0;
 
   while (cursor < text.length) {
     const start = text.indexOf("$", cursor);
 
     if (start === -1) {
-      tokens.push({ kind: "text", text: text.slice(cursor) });
+      pushText(text.slice(cursor));
       break;
     }
 
     if (isEscaped(text, start) || text[start + 1] === "$") {
-      cursor = start + 1;
+      const escapedEnd = Math.min(start + 1, text.length);
+      pushText(text.slice(cursor, escapedEnd));
+      cursor = escapedEnd;
       continue;
     }
 
-    const end = text.indexOf("$", start + 1);
+    let end = text.indexOf("$", start + 1);
+    while (end !== -1 && isEscaped(text, end)) {
+      end = text.indexOf("$", end + 1);
+    }
 
-    if (end === -1 || isEscaped(text, end)) {
-      tokens.push({ kind: "text", text: text.slice(cursor) });
+    if (end === -1) {
+      pushText(text.slice(cursor));
       break;
     }
 
     if (start > cursor) {
-      tokens.push({ kind: "text", text: text.slice(cursor, start) });
+      pushText(text.slice(cursor, start));
     }
 
     const latex = text.slice(start + 1, end).trim();
     if (latex.length) {
       tokens.push({ kind: "inlineMath", latex });
     } else {
-      tokens.push({ kind: "text", text: "$" });
+      pushText("$");
     }
 
     cursor = end + 1;
