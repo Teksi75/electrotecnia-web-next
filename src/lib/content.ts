@@ -1,5 +1,6 @@
 import path from "node:path";
 import { cache } from "react";
+import { unstable_noStore as noStore } from "next/cache";
 
 import { getMdxBySlug } from "@/lib/mdx";
 import { parseMdxSections } from "@/lib/mdxSections";
@@ -13,7 +14,8 @@ export const getAllTopicSlugs = cache(async () => {
   return [...new Set(files.filter((file) => /\.(json|mdx)$/.test(file)).map((file) => file.replace(/\.(json|mdx)$/, "")))].sort();
 });
 
-export const getTopicContentBySlug = cache(async (slug: string): Promise<TopicContent | null> => {
+export async function getTopicContentBySlug(slug: string): Promise<TopicContent | null> {
+  noStore();
   const mdxTopic = await getMdxBySlug("electricidad", slug);
 
   if (mdxTopic) {
@@ -35,5 +37,5 @@ export const getTopicContentBySlug = cache(async (slug: string): Promise<TopicCo
   } catch {
     return null;
   }
-});
+}
 

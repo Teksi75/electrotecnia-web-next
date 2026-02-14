@@ -1,5 +1,6 @@
 import path from "node:path";
 import { cache } from "react";
+import { unstable_noStore as noStore } from "next/cache";
 
 const CONTENT_ROOT = path.join(process.cwd(), "src", "content");
 
@@ -60,7 +61,8 @@ export const getAllMdxSlugs = cache(async (unit: string) => {
     .sort();
 });
 
-export const getMdxBySlug = cache(async (unit: string, slug: string): Promise<MdxTopic | null> => {
+export async function getMdxBySlug(unit: string, slug: string): Promise<MdxTopic | null> {
+  noStore();
   const fs = await import("node:fs/promises");
   const filePath = path.join(CONTENT_ROOT, unit, `${slug}.mdx`);
 
@@ -85,4 +87,4 @@ export const getMdxBySlug = cache(async (unit: string, slug: string): Promise<Md
   } catch {
     return null;
   }
-});
+}
