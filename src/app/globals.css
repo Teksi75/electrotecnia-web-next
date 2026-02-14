@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
+  /* Paleta clara base (crema suave, alineada con estética INGENIUM) */
+  --background: #f7f1e6;
   --foreground: #0f172a;
+
+  /* Alternativas claras para ajustar el tono sin tocar componentes:
+   * Opción A (más neutra): #f5efe3
+   * Opción B (más cálida): #f4ecdc
+   * Opción C (más luminosa): #faf5ea
+   */
 }
 
 .dark {
