@@ -42,8 +42,10 @@ const isInsideFencedCode = (text: string, index: number) => {
 
 const isInsideCode = (text: string, index: number) => isInsideInlineCode(text, index) || isInsideFencedCode(text, index);
 
+const hasMathDelimiters = (text: string) => text.includes("$") || text.includes("\\(") || text.includes("\\[");
+
 export function tokenizeInlineMath(text: string): InlineToken[] {
-  if (!text.includes("$")) {
+  if (!hasMathDelimiters(text)) {
     return [{ kind: "text", text }];
   }
 
@@ -67,21 +69,27 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
       continue;
     }
 
-    if (currentChar !== "$") {
+    const isDollarOpen = currentChar === "$" && !isEscaped(text, cursor) && text[cursor + 1] !== "$" && !isInsideCode(text, cursor);
+    const isParenOpen = text.slice(cursor, cursor + 2) === "\\(" && !isEscaped(text, cursor) && !isInsideCode(text, cursor);
+
+    if (!isDollarOpen && !isParenOpen) {
       textBuffer += currentChar;
       cursor += 1;
       continue;
     }
 
-    if (isEscaped(text, cursor) || text[cursor + 1] === "$" || isInsideCode(text, cursor)) {
-      textBuffer += "$";
-      cursor += 1;
-      continue;
-    }
+    const openLength = isParenOpen ? 2 : 1;
+    const closeDelimiter = isParenOpen ? "\\)" : "$";
+    let end = cursor + openLength;
 
-    let end = cursor + 1;
     while (end < text.length) {
-      if (text[end] === "$" && !isEscaped(text, end) && !isInsideCode(text, end)) break;
+      if (closeDelimiter === "$") {
+        if (text[end] === "$" && !isEscaped(text, end) && !isInsideCode(text, end)) break;
+        end += 1;
+        continue;
+      }
+
+      if (text.slice(end, end + 2) === "\\)" && !isEscaped(text, end) && !isInsideCode(text, end)) break;
       end += 1;
     }
 
@@ -92,14 +100,15 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
 
     pushTextBuffer();
 
-    const latex = text.slice(cursor + 1, end).trim();
+    const latex = text.slice(cursor + openLength, end).trim();
+
     if (latex.length) {
       tokens.push({ kind: "inlineMath", latex });
     } else {
-      tokens.push({ kind: "text", text: "$" });
+      tokens.push({ kind: "text", text: text.slice(cursor, cursor + openLength) });
     }
 
-    cursor = end + 1;
+    cursor = end + (closeDelimiter === "$" ? 1 : 2);
   }
 
   pushTextBuffer();
@@ -108,7 +117,7 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
 }
 
 export function splitBlockMath(text: string): Array<TextBlockToken | BlockToken> {
-  if (!text.includes("$$")) {
+  if (!text.includes("$$") && !text.includes("\\[")) {
     return [{ kind: "textBlock", text }];
   }
 
@@ -116,14 +125,28 @@ export function splitBlockMath(text: string): Array<TextBlockToken | BlockToken>
   let cursor = 0;
 
   while (cursor < text.length) {
-    const start = text.indexOf("$$", cursor);
+    const dollarStart = text.indexOf("$$", cursor);
+    const bracketStart = text.indexOf("\\[", cursor);
+
+    let start = -1;
+    let delimiter: "dollar" | "bracket" | null = null;
+
+    if (dollarStart !== -1 && (bracketStart === -1 || dollarStart < bracketStart)) {
+      start = dollarStart;
+      delimiter = "dollar";
+    } else if (bracketStart !== -1) {
+      start = bracketStart;
+      delimiter = "bracket";
+    }
 
     if (start === -1 || isEscaped(text, start) || isInsideCode(text, start)) {
       parts.push({ kind: "textBlock", text: text.slice(cursor) });
       break;
     }
 
-    const end = text.indexOf("$$", start + 2);
+    const close = delimiter === "dollar" ? "$$" : "\\]";
+    const end = text.indexOf(close, start + 2);
+
     if (end === -1 || isEscaped(text, end) || isInsideCode(text, end)) {
       parts.push({ kind: "textBlock", text: text.slice(cursor) });
       break;
