@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { PrevNext } from "@/components/layout/PrevNext";
 import { getTopicContentBySlug, getAllTopicSlugs } from "@/lib/content";
+import { getAllMdxSlugs, getMdxBySlug, parseMdxTopicContent } from "@/lib/mdx";
 import { getPrevNextBySlug, getTopicBySlug } from "@/lib/nav";
 import { createPageMetadata } from "@/lib/seo";
 import type { ContentBlock } from "@/types";
@@ -32,12 +33,18 @@ function BlockCard({ block }: { block: ContentBlock }) {
 }
 
 export async function generateStaticParams() {
-  const slugs = await getAllTopicSlugs();
+  const [jsonSlugs, mdxSlugs] = await Promise.all([getAllTopicSlugs(), getAllMdxSlugs("electricidad")]);
+  const slugs = [...new Set([...jsonSlugs, ...mdxSlugs])].sort();
   return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const mdxTopic = await getMdxBySlug("electricidad", slug);
+  if (mdxTopic) {
+    return createPageMetadata({ title: mdxTopic.frontmatter.title, description: mdxTopic.frontmatter.description, path: `/unidad/electricidad/${slug}` });
+  }
+
   const topic = await getTopicContentBySlug(slug);
 
   if (!topic) {
@@ -49,7 +56,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ElectricidadTopicPage({ params }: PageProps) {
   const { slug } = await params;
-  const topic = await getTopicContentBySlug(slug);
+  const mdxTopic = await getMdxBySlug("electricidad", slug);
+  const topic = mdxTopic ? parseMdxTopicContent(mdxTopic) : await getTopicContentBySlug(slug);
 
   if (!topic) notFound();
 
