@@ -58,11 +58,12 @@ export default function HomePage() {
       <section className="space-y-6">
         <Badge>Unidad activa</Badge>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Consulta de Electrotecnia</h1>
-        <p className="max-w-3xl text-slate-600 dark:text-slate-300">
+        <p className="text-sm font-semibold tracking-wide text-slate-700">Esta Wiki es un servicio de INGENIUM</p>
+        <p className="max-w-3xl text-slate-700 dark:text-slate-300">
           Esta wiki está pensada para estudiantes que necesitan entender, repasar y practicar Electricidad de forma
           ordenada. Podés recorrerla en secuencia como curso breve o usarla como apunte rápido por tema.
         </p>
-        <div className="max-w-3xl rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+        <div className="max-w-3xl rounded-xl border border-slate-300 bg-white p-4 text-sm text-slate-800 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
           Encontrarás explicaciones breves, fórmulas clave y ejemplos numéricos para conectar teoría con resolución de
           problemas.
         </div>
@@ -72,7 +73,7 @@ export default function HomePage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold tracking-tight">Temas destacados</h2>
+        <h2 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">Temas destacados</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featuredTopics.map((item) => {
             const topic = getTopicBySlug(item.slug);
@@ -91,7 +92,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-3 rounded-xl border border-slate-200 p-5 dark:border-slate-800">
+      <section className="space-y-3 rounded-xl border border-slate-300 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
         <h2 className="text-2xl font-semibold tracking-tight">Cómo estudiar con esta wiki</h2>
         <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
           {studyTips.map((tip) => (
