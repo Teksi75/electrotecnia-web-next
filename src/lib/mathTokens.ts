@@ -43,7 +43,7 @@ const isInsideFencedCode = (text: string, index: number) => {
 const isInsideCode = (text: string, index: number) => isInsideInlineCode(text, index) || isInsideFencedCode(text, index);
 
 export function tokenizeInlineMath(text: string): InlineToken[] {
-  if (!text.includes("$")) {
+  if (!text.includes("$") && !text.includes("\\(")) {
     return [{ kind: "text", text }];
   }
 
@@ -64,6 +64,31 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
     if (currentChar === "\\" && text[cursor + 1] === "$") {
       textBuffer += "$";
       cursor += 2;
+      continue;
+    }
+
+    if (currentChar === "\\" && text[cursor + 1] === "(" && !isEscaped(text, cursor) && !isInsideCode(text, cursor)) {
+      let end = cursor + 2;
+      while (end < text.length - 1) {
+        if (text[end] === "\\" && text[end + 1] === ")" && !isEscaped(text, end) && !isInsideCode(text, end)) break;
+        end += 1;
+      }
+
+      if (end >= text.length - 1) {
+        textBuffer += text.slice(cursor);
+        break;
+      }
+
+      pushTextBuffer();
+
+      const latex = text.slice(cursor + 2, end).trim();
+      if (latex.length) {
+        tokens.push({ kind: "inlineMath", latex });
+      } else {
+        tokens.push({ kind: "text", text: "\\(\\)" });
+      }
+
+      cursor = end + 2;
       continue;
     }
 
@@ -108,7 +133,7 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
 }
 
 export function splitBlockMath(text: string): Array<TextBlockToken | BlockToken> {
-  if (!text.includes("$$")) {
+  if (!text.includes("$$") && !text.includes("\\[")) {
     return [{ kind: "textBlock", text }];
   }
 
@@ -116,15 +141,34 @@ export function splitBlockMath(text: string): Array<TextBlockToken | BlockToken>
   let cursor = 0;
 
   while (cursor < text.length) {
-    const start = text.indexOf("$$", cursor);
+    let start = text.indexOf("$$", cursor);
+    let end = -1;
+    let delimiterLength = 2;
 
-    if (start === -1 || isEscaped(text, start) || isInsideCode(text, start)) {
-      parts.push({ kind: "textBlock", text: text.slice(cursor) });
-      break;
+    while (start !== -1 && (isEscaped(text, start) || isInsideCode(text, start))) {
+      start = text.indexOf("$$", start + 2);
     }
 
-    const end = text.indexOf("$$", start + 2);
-    if (end === -1 || isEscaped(text, end) || isInsideCode(text, end)) {
+    let bracketStart = text.indexOf("\\[", cursor);
+    while (bracketStart !== -1 && (isEscaped(text, bracketStart) || isInsideCode(text, bracketStart))) {
+      bracketStart = text.indexOf("\\[", bracketStart + 2);
+    }
+
+    if (bracketStart !== -1 && (start === -1 || bracketStart < start)) {
+      start = bracketStart;
+      delimiterLength = 2;
+      end = text.indexOf("\\]", start + 2);
+      while (end !== -1 && (isEscaped(text, end) || isInsideCode(text, end))) {
+        end = text.indexOf("\\]", end + 2);
+      }
+    } else if (start !== -1) {
+      end = text.indexOf("$$", start + 2);
+      while (end !== -1 && (isEscaped(text, end) || isInsideCode(text, end))) {
+        end = text.indexOf("$$", end + 2);
+      }
+    }
+
+    if (start === -1 || end === -1) {
       parts.push({ kind: "textBlock", text: text.slice(cursor) });
       break;
     }
@@ -133,12 +177,12 @@ export function splitBlockMath(text: string): Array<TextBlockToken | BlockToken>
       parts.push({ kind: "textBlock", text: text.slice(cursor, start) });
     }
 
-    const latex = text.slice(start + 2, end).trim();
+    const latex = text.slice(start + delimiterLength, end).trim();
     if (latex.length) {
       parts.push({ kind: "blockMath", latex });
     }
 
-    cursor = end + 2;
+    cursor = end + delimiterLength;
   }
 
   return parts.length ? parts : [{ kind: "textBlock", text }];
