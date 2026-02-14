@@ -17,10 +17,9 @@ type ButtonAsChild = {
 };
 
 const variants: Record<Variant, string> = {
-  solid: "bg-slate-900 text-white hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-300",
-  outline:
-    "border border-slate-300 bg-transparent text-slate-900 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800",
-  ghost: "bg-transparent text-slate-700 hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800",
+  solid: "bg-primary text-primary-foreground hover:bg-primary/90",
+  outline: "border border-border bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground",
+  ghost: "bg-transparent text-muted-foreground hover:bg-accent hover:text-accent-foreground",
 };
 
 export function Button(props: ButtonAsButton | ButtonAsChild) {
@@ -31,7 +30,7 @@ export function Button(props: ButtonAsButton | ButtonAsChild) {
 
     return React.cloneElement(children, {
       className: cn(
-        "inline-flex h-10 items-center rounded-md px-4 text-sm font-medium transition-colors",
+        "inline-flex h-10 items-center rounded-md px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         variants[variant],
         className,
         children.props.className,
@@ -44,7 +43,7 @@ export function Button(props: ButtonAsButton | ButtonAsChild) {
   return (
     <button
       className={cn(
-        "inline-flex h-10 items-center rounded-md px-4 text-sm font-medium transition-colors",
+        "inline-flex h-10 items-center rounded-md px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         variants[variant],
         className,
       )}
