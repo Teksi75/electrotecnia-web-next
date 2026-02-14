@@ -23,20 +23,20 @@ export default function ElectricidadIndexPage() {
     <div className="space-y-8">
       <header className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">Unidad: Electricidad</h1>
-        <p className="text-slate-600 dark:text-slate-300">Wiki/apunte rápido para estudiar en orden todos los temas de la unidad.</p>
+        <p className="text-slate-800 dark:text-slate-300">Wiki/apunte rápido para estudiar en orden todos los temas de la unidad.</p>
       </header>
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <h2 className="text-xl font-semibold">Parte 1</h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Electricidad básica: cargas, campos y potencial.</p>
+          <p className="mt-2 text-sm text-slate-800 dark:text-slate-300">Electricidad básica: cargas, campos y potencial.</p>
           <p className="mt-3 text-xs text-slate-500">Progreso: 0/{sections[0]?.children.length ?? 0} temas.</p>
           {firstPart1 ? <Button asChild className="mt-4"><Link href={firstPart1.href}>Comenzar Parte 1</Link></Button> : null}
         </Card>
 
         <Card>
           <h2 className="text-xl font-semibold">Parte 2</h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Electricidad en circuitos: magnitudes y leyes fundamentales.</p>
+          <p className="mt-2 text-sm text-slate-800 dark:text-slate-300">Electricidad en circuitos: magnitudes y leyes fundamentales.</p>
           <p className="mt-3 text-xs text-slate-500">Progreso: 0/{sections[1]?.children.length ?? 0} temas.</p>
           {firstPart2 ? <Button asChild className="mt-4"><Link href={firstPart2.href}>Comenzar Parte 2</Link></Button> : null}
         </Card>

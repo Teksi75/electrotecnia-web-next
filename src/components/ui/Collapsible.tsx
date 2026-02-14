@@ -16,16 +16,16 @@ export function Collapsible({ title, children, defaultOpen = false, className }:
   const contentId = useId();
 
   return (
-    <section className={cn("rounded-lg border border-slate-200 p-2 dark:border-slate-800", className)}>
+    <section className={cn("rounded-lg border border-slate-300/90 bg-white/45 p-2 text-slate-900 dark:border-slate-800 dark:bg-transparent dark:text-slate-100", className)}>
       <button
         type="button"
-        className="flex w-full items-center justify-between px-1 py-1 text-left text-sm font-semibold"
+        className="flex w-full items-center justify-between px-1 py-1 text-left text-sm font-semibold text-slate-900 dark:text-slate-100"
         aria-expanded={open}
         aria-controls={contentId}
         onClick={() => setOpen((value) => !value)}
       >
         {title}
-        <span className="text-xs text-slate-500">{open ? "Ocultar" : "Mostrar"}</span>
+        <span className="text-xs text-slate-700 dark:text-slate-300">{open ? "Ocultar" : "Mostrar"}</span>
       </button>
       {open ? (
         <div id={contentId} className="pt-2">
