@@ -13,6 +13,9 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 function BlockCard({ block }: { block: ContentBlock }) {
   if (block.type === "idea") {
     return <IdeaClaveCard block={block} />;
