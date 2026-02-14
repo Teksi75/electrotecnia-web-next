@@ -58,7 +58,7 @@ export default function HomePage() {
       <section className="space-y-6">
         <Badge>Unidad activa</Badge>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Consulta de Electrotecnia</h1>
-        <p className="max-w-3xl text-slate-600 dark:text-slate-300">
+        <p className="max-w-3xl text-slate-800 dark:text-slate-300">
           Esta wiki está pensada para estudiantes que necesitan entender, repasar y practicar Electricidad de forma
           ordenada. Podés recorrerla en secuencia como curso breve o usarla como apunte rápido por tema.
         </p>
@@ -81,7 +81,7 @@ export default function HomePage() {
             return (
               <Card key={item.slug} className="flex h-full flex-col">
                 <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p className="mt-2 flex-1 text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
+                <p className="mt-2 flex-1 text-sm text-slate-800 dark:text-slate-300">{item.description}</p>
                 <Button asChild variant="outline" className="mt-4 w-full justify-center">
                   <Link href={href}>Abrir tema</Link>
                 </Button>
@@ -93,10 +93,10 @@ export default function HomePage() {
 
       <section className="space-y-3 rounded-xl border border-slate-200 p-5 dark:border-slate-800">
         <h2 className="text-2xl font-semibold tracking-tight">Cómo estudiar con esta wiki</h2>
-        <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+        <ul className="space-y-2 text-sm text-slate-800 dark:text-slate-300">
           {studyTips.map((tip) => (
             <li key={tip} className="flex gap-2">
-              <span aria-hidden="true" className="mt-1 text-slate-400">•</span>
+              <span aria-hidden="true" className="mt-1 text-slate-600">•</span>
               <span>{tip}</span>
             </li>
           ))}
