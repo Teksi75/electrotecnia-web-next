@@ -31,8 +31,8 @@ export function BlockMath({ latex }: BlockMathProps) {
   }
 
   return (
-    <div className="my-3 overflow-x-auto rounded-md bg-slate-100/80 px-3 py-2 dark:bg-slate-800/80">
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+    <div className="my-4 overflow-x-auto rounded-md bg-slate-100/80 px-3 py-2 dark:bg-slate-800/80">
+      <div className="min-w-max" dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );
 }

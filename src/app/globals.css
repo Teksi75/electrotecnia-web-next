@@ -22,3 +22,23 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+
+.katex-inline .katex {
+  font-size: 1.05em;
+  line-height: 1.35;
+}
+
+.katex-display {
+  margin: 0.85rem 0;
+}
+
+.katex-display > .katex {
+  font-size: 1.08em;
+  min-width: max-content;
+}
+
+.dark .katex,
+.dark .katex * {
+  color: rgb(226 232 240);
+}

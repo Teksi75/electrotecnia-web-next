@@ -56,4 +56,16 @@ assert.equal(tokens[0]?.text, "El costo es $1200 y ", "El texto previo con dóla
 assert.equal(tokens[1]?.kind, "inlineMath");
 assert.equal(tokens[1]?.latex, "E=mc^2", "La matemática inline debe tokenizarse");
 
+const bracketBlockSample = "Texto previo\n\\[P = VI\\]\nTexto posterior";
+const bracketParsed = parseMdxSections(`## Fórmulas\n${bracketBlockSample}`);
+const bracketNodes = bracketParsed.blocks[0]?.nodes ?? [];
+assert.equal(bracketNodes.some((node) => node.kind === "blockMath" && node.latex === "P = VI"), true, "Debe soportar matemática de bloque con delimitadores \\[...\\]");
+
+const inlineCodeText = "Usar `precio $100` como texto y $E=mc^2$ como matemática";
+const inlineCodeTokens = tokenizeInlineMath(inlineCodeText);
+assert.equal(inlineCodeTokens[0]?.kind, "text");
+assert.equal(inlineCodeTokens[0]?.text.includes("`precio $100`"), true, "No debe parsear matemática dentro de código inline");
+assert.equal(inlineCodeTokens[1]?.kind, "inlineMath");
+assert.equal(inlineCodeTokens[1]?.latex, "E=mc^2");
+
 console.log("parse-smoke-test: OK");
