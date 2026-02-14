@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { EjemploCard } from "@/components/content/cards/EjemploCard";
+import { ExplicacionCard } from "@/components/content/cards/ExplicacionCard";
+import { FormulaCard } from "@/components/content/cards/FormulaCard";
+import { IdeaClaveCard } from "@/components/content/cards/IdeaClaveCard";
 import { PrevNext } from "@/components/layout/PrevNext";
-import { getTopicContentBySlug, getAllTopicSlugs } from "@/lib/content";
+import { getAllTopicSlugs, getTopicContentBySlug } from "@/lib/content";
 import { getPrevNextBySlug, getTopicBySlug } from "@/lib/nav";
 import { createPageMetadata } from "@/lib/seo";
 import type { ContentBlock } from "@/types";
@@ -12,23 +16,19 @@ type PageProps = {
 };
 
 function BlockCard({ block }: { block: ContentBlock }) {
-  return (
-    <section className="rounded-xl border border-slate-200 bg-white/70 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/60">
-      <h2 className="text-lg font-semibold">{block.title}</h2>
-      {block.body ? (
-        <p className={block.mono ? "mt-2 font-mono text-sm whitespace-pre-wrap" : "mt-2 text-slate-700 dark:text-slate-300 whitespace-pre-wrap"}>
-          {block.body}
-        </p>
-      ) : null}
-      {block.items?.length ? (
-        <ul className="mt-3 list-disc space-y-1 pl-5 text-slate-700 dark:text-slate-300">
-          {block.items.map((item) => (
-            <li key={item} className="font-mono text-sm">{item}</li>
-          ))}
-        </ul>
-      ) : null}
-    </section>
-  );
+  if (block.type === "idea") {
+    return <IdeaClaveCard block={block} />;
+  }
+
+  if (block.type === "explain") {
+    return <ExplicacionCard block={block} />;
+  }
+
+  if (block.type === "example") {
+    return <EjemploCard block={block} />;
+  }
+
+  return <FormulaCard block={block} />;
 }
 
 export async function generateStaticParams() {

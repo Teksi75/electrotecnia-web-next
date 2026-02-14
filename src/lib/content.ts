@@ -1,8 +1,9 @@
 import path from "node:path";
 import { cache } from "react";
 
+import { splitBlockMath, tokenizeInlineMath } from "@/lib/mathTokens";
 import { getMdxBySlug } from "@/lib/mdx";
-import type { TopicContent } from "@/types";
+import type { ContentBlock, TopicContent } from "@/types";
 
 const CONTENT_ROOT = path.join(process.cwd(), "src", "content", "electricidad");
 
@@ -36,6 +37,62 @@ export const getTopicContentBySlug = cache(async (slug: string): Promise<TopicCo
   }
 });
 
+const resolveBlockType = (heading: string): ContentBlock["type"] => {
+  const normalized = heading.trim().toLowerCase();
+
+  if (normalized === "idea clave") {
+    return "idea";
+  }
+
+  if (normalized === "mini explicación" || normalized === "explicación") {
+    return "explain";
+  }
+
+  if (normalized === "ejemplo numérico (si)") {
+    return "example";
+  }
+
+  return "formulas";
+};
+
+const buildNodes = (text: string, mono = false): NonNullable<ContentBlock["nodes"]> => {
+  const blocks = splitBlockMath(text);
+  const nodes: NonNullable<ContentBlock["nodes"]> = [];
+
+  for (const block of blocks) {
+    if (block.kind === "blockMath") {
+      nodes.push({ kind: "mathBlock", latex: block.latex });
+      continue;
+    }
+
+    const paragraphs = block.text.split(/\n\s*\n/g);
+    for (const paragraph of paragraphs) {
+      const trimmed = paragraph.trim();
+      if (!trimmed) {
+        continue;
+      }
+
+      nodes.push({
+        kind: "paragraph",
+        text: trimmed,
+        tokens: tokenizeInlineMath(trimmed),
+        mono,
+      });
+    }
+  }
+
+  return nodes;
+};
+
+const createBlock = (title: string, body: string, mono = false): ContentBlock => ({
+  type: resolveBlockType(title),
+  title,
+  body,
+  bodyTokens: tokenizeInlineMath(body),
+  nodes: buildNodes(body, mono),
+  mono,
+});
+
 function parseMdxSections(content: string): Pick<TopicContent, "blocks" | "sections"> {
   const lines = content.split("\n");
   const blocks: TopicContent["blocks"] = [];
@@ -54,8 +111,8 @@ function parseMdxSections(content: string): Pick<TopicContent, "blocks" | "secti
     if (currentSection) {
       currentSection.lines.push(text);
     } else if (currentMain) {
-      const type = currentMain === "Idea clave" ? "idea" : currentMain === "Mini explicación" ? "explain" : currentMain === "Ejemplo numérico (SI)" ? "example" : "formulas";
-      blocks.push({ type, title: currentMain, body: text, mono: type === "example" });
+      const type = resolveBlockType(currentMain);
+      blocks.push({ ...createBlock(currentMain, text, type === "example"), type });
     }
 
     buffer = [];
@@ -77,7 +134,7 @@ function parseMdxSections(content: string): Pick<TopicContent, "blocks" | "secti
         sections.push({
           id: currentSection.id,
           title: currentSection.title,
-          blocks: currentSection.lines.map((body, index) => ({ type: index === 0 ? "explain" : "example", title: index === 0 ? "Explicación" : "Ejemplo", body, mono: index > 0 })),
+          blocks: currentSection.lines.map((body, index) => createBlock(index === 0 ? "Explicación" : "Ejemplo", body, index > 0)),
         });
       }
       currentSection = { id: subHeading[2], title: subHeading[1], lines: [] };
@@ -97,7 +154,7 @@ function parseMdxSections(content: string): Pick<TopicContent, "blocks" | "secti
     sections.push({
       id: currentSection.id,
       title: currentSection.title,
-      blocks: currentSection.lines.map((body, index) => ({ type: index === 0 ? "explain" : "example", title: index === 0 ? "Explicación" : "Ejemplo", body, mono: index > 0 })),
+      blocks: currentSection.lines.map((body, index) => createBlock(index === 0 ? "Explicación" : "Ejemplo", body, index > 0)),
     });
   }
 
