@@ -14,6 +14,77 @@ const isEscaped = (text: string, index: number) => {
   return backslashes % 2 === 1;
 };
 
+const startsWithAt = (text: string, cursor: number, target: string) => text.slice(cursor, cursor + target.length) === target;
+
+const consumeCodeSpan = (text: string, cursor: number): number => {
+  if (text[cursor] !== "`") return cursor;
+
+  let ticks = 1;
+  while (text[cursor + ticks] === "`") ticks += 1;
+
+  const fence = "`".repeat(ticks);
+  let end = cursor + ticks;
+
+  while (end < text.length) {
+    if (startsWithAt(text, end, fence)) {
+      return end + ticks;
+    }
+    end += 1;
+  }
+
+  return text.length;
+};
+
+const findInlineMathEnd = (text: string, start: number) => {
+  let end = start + 1;
+
+  while (end < text.length) {
+    if (text[end] === "`") {
+      end = consumeCodeSpan(text, end);
+      continue;
+    }
+
+    if (text[end] === "$" && !isEscaped(text, end)) {
+      return end;
+    }
+
+    end += 1;
+  }
+
+  return -1;
+};
+
+const findBlockMathEnd = (text: string, start: number, closing: string) => {
+  let cursor = start;
+  let inFence = false;
+
+  while (cursor < text.length) {
+    if (startsWithAt(text, cursor, "```")) {
+      inFence = !inFence;
+      cursor += 3;
+      continue;
+    }
+
+    if (inFence) {
+      cursor += 1;
+      continue;
+    }
+
+    if (text[cursor] === "`") {
+      cursor = consumeCodeSpan(text, cursor);
+      continue;
+    }
+
+    if (startsWithAt(text, cursor, closing) && !isEscaped(text, cursor)) {
+      return cursor;
+    }
+
+    cursor += 1;
+  }
+
+  return -1;
+};
+
 export function tokenizeInlineMath(text: string): InlineToken[] {
   if (!text.includes("$")) {
     return [{ kind: "text", text }];
@@ -39,6 +110,13 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
       continue;
     }
 
+    if (currentChar === "`") {
+      const nextCursor = consumeCodeSpan(text, cursor);
+      textBuffer += text.slice(cursor, nextCursor);
+      cursor = nextCursor;
+      continue;
+    }
+
     if (currentChar !== "$") {
       textBuffer += currentChar;
       cursor += 1;
@@ -51,13 +129,9 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
       continue;
     }
 
-    let end = cursor + 1;
-    while (end < text.length) {
-      if (text[end] === "$" && !isEscaped(text, end)) break;
-      end += 1;
-    }
+    const end = findInlineMathEnd(text, cursor);
 
-    if (end >= text.length) {
+    if (end === -1) {
       textBuffer += text.slice(cursor);
       break;
     }
@@ -80,37 +154,71 @@ export function tokenizeInlineMath(text: string): InlineToken[] {
 }
 
 export function splitBlockMath(text: string): Array<TextBlockToken | BlockToken> {
-  if (!text.includes("$$")) {
+  if (!text.includes("$$") && !text.includes("\\[")) {
     return [{ kind: "textBlock", text }];
   }
 
   const parts: Array<TextBlockToken | BlockToken> = [];
   let cursor = 0;
+  let lastTextStart = 0;
+  let inFence = false;
 
   while (cursor < text.length) {
-    const start = text.indexOf("$$", cursor);
-
-    if (start === -1 || isEscaped(text, start)) {
-      parts.push({ kind: "textBlock", text: text.slice(cursor) });
-      break;
+    if (startsWithAt(text, cursor, "```")) {
+      inFence = !inFence;
+      cursor += 3;
+      continue;
     }
 
-    const end = text.indexOf("$$", start + 2);
-    if (end === -1 || isEscaped(text, end)) {
-      parts.push({ kind: "textBlock", text: text.slice(cursor) });
-      break;
+    if (inFence) {
+      cursor += 1;
+      continue;
     }
 
-    if (start > cursor) {
-      parts.push({ kind: "textBlock", text: text.slice(cursor, start) });
+    if (text[cursor] === "`") {
+      cursor = consumeCodeSpan(text, cursor);
+      continue;
     }
 
-    const latex = text.slice(start + 2, end).trim();
+    let opening = "";
+    let closing = "";
+
+    if (startsWithAt(text, cursor, "$$") && !isEscaped(text, cursor)) {
+      opening = "$$";
+      closing = "$$";
+    } else if (startsWithAt(text, cursor, "\\[") && !isEscaped(text, cursor)) {
+      opening = "\\[";
+      closing = "\\]";
+    }
+
+    if (!opening) {
+      cursor += 1;
+      continue;
+    }
+
+    const start = cursor;
+    const end = findBlockMathEnd(text, start + opening.length, closing);
+
+    if (end === -1) {
+      cursor += opening.length;
+      continue;
+    }
+
+    if (start > lastTextStart) {
+      parts.push({ kind: "textBlock", text: text.slice(lastTextStart, start) });
+    }
+
+    const latex = text.slice(start + opening.length, end).trim();
     if (latex.length) {
       parts.push({ kind: "blockMath", latex });
     }
 
-    cursor = end + 2;
+    cursor = end + closing.length;
+    lastTextStart = cursor;
+  }
+
+  if (lastTextStart < text.length) {
+    parts.push({ kind: "textBlock", text: text.slice(lastTextStart) });
   }
 
   return parts.length ? parts : [{ kind: "textBlock", text }];

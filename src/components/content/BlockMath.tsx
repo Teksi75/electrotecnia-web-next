@@ -24,15 +24,15 @@ export function BlockMath({ latex }: BlockMathProps) {
 
   if (!html) {
     return (
-      <div className="my-3 overflow-x-auto rounded-md bg-slate-100/80 px-3 py-2 font-mono text-sm dark:bg-slate-800/80">
+      <div className="my-4 overflow-x-auto rounded-md border border-slate-200/80 bg-slate-50 px-3 py-2 font-mono text-sm dark:border-slate-700 dark:bg-slate-900/60">
         {latex}
       </div>
     );
   }
 
   return (
-    <div className="my-3 overflow-x-auto rounded-md bg-slate-100/80 px-3 py-2 dark:bg-slate-800/80">
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+    <div className="my-4 overflow-x-auto rounded-md border border-slate-200/80 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-950/40">
+      <div className="flex justify-center text-slate-900 dark:text-slate-100" dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );
 }

@@ -34,7 +34,7 @@ const sections = await transpileToTemp(
 await fs.copyFile(math.outFile, path.join(sections.tempDir, "mathTokens.mjs"));
 
 const { parseMdxSections } = await import(pathToFileURL(sections.outFile).href);
-const { tokenizeInlineMath } = await import(pathToFileURL(path.join(sections.tempDir, "mathTokens.mjs")).href);
+const { tokenizeInlineMath, splitBlockMath } = await import(pathToFileURL(path.join(sections.tempDir, "mathTokens.mjs")).href);
 
 const mdxSample = `## Mini explicación
 ### Sección inicial {#seccion-inicial}
@@ -55,5 +55,16 @@ assert.equal(tokens[0]?.kind, "text");
 assert.equal(tokens[0]?.text, "El costo es $1200 y ", "El texto previo con dólar escapado debe preservarse");
 assert.equal(tokens[1]?.kind, "inlineMath");
 assert.equal(tokens[1]?.latex, "E=mc^2", "La matemática inline debe tokenizarse");
+
+const codeSpanTokens = tokenizeInlineMath("Usar `precio $x$` y $y$");
+assert.equal(codeSpanTokens[0]?.kind, "text", "No debe parsear math dentro de inline code");
+assert.equal(codeSpanTokens[0]?.text, "Usar `precio $x$` y ", "Inline code debe mantenerse literal");
+assert.equal(codeSpanTokens[1]?.kind, "inlineMath", "Math fuera del code span sí debe parsearse");
+assert.equal(codeSpanTokens[1]?.latex, "y");
+
+const codeFenceSample = "```tex\n$$E=mc^2$$\n```\n\\[a+b\\]";
+const blocks = splitBlockMath(codeFenceSample);
+assert.equal(blocks[0]?.kind, "textBlock", "No debe parsear math dentro de fenced code");
+assert.equal(blocks[1]?.kind, "blockMath", "Debe parsear \\[...\\] como display math fuera de fence");
 
 console.log("parse-smoke-test: OK");
