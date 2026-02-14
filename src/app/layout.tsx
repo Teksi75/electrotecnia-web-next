@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import { BASE_URL } from "@/lib/seo";
 
 import "./globals.css";
+import "katex/dist/katex.min.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
