@@ -33,3 +33,17 @@ Además, en subsecciones `### Título {#ancla}`:
 - Si falta cerrar `$` o `$$`, el contenido se conserva como texto.
 - El parser evita insertar HTML crudo; solo genera tokens/nodos tipados.
 - `dangerouslySetInnerHTML` se usa exclusivamente dentro de los componentes de matemática (`InlineMath` y `BlockMath`).
+
+
+## Guía rápida para autores: cómo escribir fórmulas
+
+- **Inline math**: encerrá la fórmula entre `$...$`.
+  - ✅ Correcto: `$|F| = k \frac{|q_1 q_2|}{r^2}$`
+  - ❌ Evitar: `|F| = k \frac{|q_1 q_2|}{r^2}` (sin delimitadores)
+- **Display math**: usá `$$...$$` o `\[...\]` para fórmulas en bloque.
+  - Ejemplo: `$$|F| = k \frac{|q_1 q_2|}{r^2}$$`
+  - Ejemplo: `\[P = VI\]`
+- Para unidades o símbolos especiales, mantené los escapes de LaTeX dentro de delimitadores.
+  - Ejemplo: `$1\,\mu C = 10^{-6}\,C.$`
+- Si querés mostrar LaTeX literal (sin render), usá comillas invertidas o bloque de código.
+  - Ejemplo: `` `\frac{a}{b}` ``
