@@ -23,5 +23,5 @@ export function InlineMath({ latex }: InlineMathProps) {
     return <code className="rounded bg-secondary px-1 py-0.5 text-xs">{latex}</code>;
   }
 
-  return <span className="katex-inline" dangerouslySetInnerHTML={{ __html: html }} />;
+  return <span className="math-inline" dangerouslySetInnerHTML={{ __html: html }} />;
 }
