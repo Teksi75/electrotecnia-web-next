@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createPageMetadata } from "@/lib/seo";
 import { getPartFirstTopic, getSectionNodes } from "@/lib/nav";
 
+import { SIPrefixesCard } from "@/components/content/SIPrefixesCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 
@@ -42,14 +43,18 @@ export default function ElectricidadIndexPage() {
         </Card>
       </div>
 
-      <section className="rounded-xl border border-border p-5">
-        <h2 className="text-xl font-semibold">Glosario de unidades</h2>
-        <ul className="mt-3 flex flex-wrap gap-2">
-          {glossary.map((item) => (
-            <li key={item} className="rounded-md border border-border px-3 py-1 font-mono text-sm">{item}</li>
-          ))}
-        </ul>
-      </section>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <section className="rounded-xl border border-border p-5">
+          <h2 className="text-xl font-semibold">Glosario de unidades</h2>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {glossary.map((item) => (
+              <li key={item} className="rounded-md border border-border px-3 py-1 font-mono text-sm">{item}</li>
+            ))}
+          </ul>
+        </section>
+
+        <SIPrefixesCard />
+      </div>
     </div>
   );
 }
