@@ -2,35 +2,36 @@
 
 import { useState } from "react";
 
+import { InlineMath } from "@/components/content/InlineMath";
 import { cn } from "@/lib/utils";
 
 type SIPrefix = {
   name: string;
   symbol: string;
-  exponent: string;
+  exponentLatex: string;
 };
 
 const siPrefixes: SIPrefix[] = [
-  { name: "Yotta", symbol: "Y", exponent: "10^24" },
-  { name: "Zetta", symbol: "Z", exponent: "10^21" },
-  { name: "Exa", symbol: "E", exponent: "10^18" },
-  { name: "Peta", symbol: "P", exponent: "10^15" },
-  { name: "Tera", symbol: "T", exponent: "10^12" },
-  { name: "Giga", symbol: "G", exponent: "10^9" },
-  { name: "Mega", symbol: "M", exponent: "10^6" },
-  { name: "kilo", symbol: "k", exponent: "10^3" },
-  { name: "hecto", symbol: "h", exponent: "10^2" },
-  { name: "deca", symbol: "da", exponent: "10^1" },
-  { name: "deci", symbol: "d", exponent: "10^-1" },
-  { name: "centi", symbol: "c", exponent: "10^-2" },
-  { name: "mili", symbol: "m", exponent: "10^-3" },
-  { name: "micro", symbol: "µ", exponent: "10^-6" },
-  { name: "nano", symbol: "n", exponent: "10^-9" },
-  { name: "pico", symbol: "p", exponent: "10^-12" },
-  { name: "femto", symbol: "f", exponent: "10^-15" },
-  { name: "atto", symbol: "a", exponent: "10^-18" },
-  { name: "zepto", symbol: "z", exponent: "10^-21" },
-  { name: "yocto", symbol: "y", exponent: "10^-24" },
+  { name: "Yotta", symbol: "Y", exponentLatex: "10^{24}" },
+  { name: "Zetta", symbol: "Z", exponentLatex: "10^{21}" },
+  { name: "Exa", symbol: "E", exponentLatex: "10^{18}" },
+  { name: "Peta", symbol: "P", exponentLatex: "10^{15}" },
+  { name: "Tera", symbol: "T", exponentLatex: "10^{12}" },
+  { name: "Giga", symbol: "G", exponentLatex: "10^{9}" },
+  { name: "Mega", symbol: "M", exponentLatex: "10^{6}" },
+  { name: "kilo", symbol: "k", exponentLatex: "10^{3}" },
+  { name: "hecto", symbol: "h", exponentLatex: "10^{2}" },
+  { name: "deca", symbol: "da", exponentLatex: "10^{1}" },
+  { name: "deci", symbol: "d", exponentLatex: "10^{-1}" },
+  { name: "centi", symbol: "c", exponentLatex: "10^{-2}" },
+  { name: "mili", symbol: "m", exponentLatex: "10^{-3}" },
+  { name: "micro", symbol: "µ", exponentLatex: "10^{-6}" },
+  { name: "nano", symbol: "n", exponentLatex: "10^{-9}" },
+  { name: "pico", symbol: "p", exponentLatex: "10^{-12}" },
+  { name: "femto", symbol: "f", exponentLatex: "10^{-15}" },
+  { name: "atto", symbol: "a", exponentLatex: "10^{-18}" },
+  { name: "zepto", symbol: "z", exponentLatex: "10^{-21}" },
+  { name: "yocto", symbol: "y", exponentLatex: "10^{-24}" },
 ];
 
 const chipBaseClassName =
@@ -66,7 +67,7 @@ export function SIPrefixesCard() {
       </ul>
 
       <p className="mt-4 text-sm text-muted-foreground" aria-live="polite">
-        {selectedPrefix.name} — {selectedPrefix.symbol} — {selectedPrefix.exponent}
+        {selectedPrefix.name} — {selectedPrefix.symbol} — <InlineMath latex={selectedPrefix.exponentLatex} />
       </p>
     </section>
   );
