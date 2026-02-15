@@ -56,6 +56,9 @@ export default function HomePage() {
   return (
     <main className="mx-auto w-full max-w-5xl space-y-10 px-4 py-12 sm:px-6 lg:px-8">
       <section className="space-y-6">
+        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          Esta web es un servicio de <span className="font-semibold tracking-[0.28em] text-amber-700/90">INGENIUM</span>
+        </p>
         <Badge>Unidad activa</Badge>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Consulta de Electrotecnia</h1>
         <p className="max-w-3xl text-muted-foreground">
