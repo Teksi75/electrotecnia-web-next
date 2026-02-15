@@ -57,8 +57,9 @@ export default function HomePage() {
     <main className="mx-auto w-full max-w-5xl space-y-10 px-4 py-12 sm:px-6 lg:px-8">
       <section className="space-y-6">
         <Badge>Unidad activa</Badge>
-        <div className="space-y-1">
+        <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Consulta de Electrotecnia</h1>
+          <p className="text-base font-semibold tracking-[0.28em] text-amber-700/90 sm:text-lg">INGENIUM</p>
           <p className="text-sm text-muted-foreground">Un servicio de Ingenium</p>
         </div>
         <p className="max-w-3xl text-muted-foreground">
