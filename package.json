@@ -9,7 +9,8 @@
     "lint": "eslint",
     "prebuild": "node scripts/generate-search-index.mjs",
     "predev": "node scripts/generate-search-index.mjs",
-    "test:parse-smoke": "node scripts/parse-smoke-test.mjs"
+    "test:parse-smoke": "node scripts/parse-smoke-test.mjs",
+    "test:math-delimiter-smoke": "node scripts/math-delimiter-smoke.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
