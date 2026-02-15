@@ -20,6 +20,17 @@ export async function Header() {
             Unidad: Electricidad
           </Link>
         </nav>
+        <p className="hidden text-sm text-muted-foreground lg:block">
+          Esta web es un servicio de
+          <Link
+            href="https://ingenium-web.vercel.app/"
+            target="_blank"
+            rel="noreferrer"
+            className="ml-2 inline-block font-semibold tracking-[0.28em] text-amber-700/90 hover:text-amber-600"
+          >
+            INGENIUM
+          </Link>
+        </p>
         <div className="ml-auto flex items-center gap-2">
           <SearchBox items={searchIndex} />
           <ThemeToggle />
