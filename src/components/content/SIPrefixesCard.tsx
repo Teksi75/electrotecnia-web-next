@@ -35,14 +35,14 @@ const siPrefixes: SIPrefix[] = [
 ];
 
 const chipBaseClassName =
-  "rounded-md border border-border px-3 py-1 font-mono text-sm text-foreground transition-colors hover:bg-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "rounded-xl border border-border/80 bg-card/80 px-3 py-1 font-mono text-sm text-foreground transition hover:bg-accent/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 export function SIPrefixesCard() {
   const [selectedPrefix, setSelectedPrefix] = useState<SIPrefix>(siPrefixes[7]);
 
   return (
-    <section className="rounded-xl border border-border p-5">
-      <h2 className="text-xl font-semibold">Múltiplos y submúltiplos (SI)</h2>
+    <section className="surface-panel rounded-2xl p-5">
+      <h2 className="text-2xl font-semibold">Múltiplos y submúltiplos (SI)</h2>
 
       <ul className="mt-3 flex flex-wrap gap-2" aria-label="Prefijos SI comunes">
         {siPrefixes.map((prefix) => {
@@ -54,7 +54,7 @@ export function SIPrefixesCard() {
                 type="button"
                 className={cn(
                   chipBaseClassName,
-                  isSelected && "border-primary bg-primary/10 text-foreground",
+                  isSelected && "border-[var(--highlight)] bg-accent text-foreground",
                 )}
                 onClick={() => setSelectedPrefix(prefix)}
                 aria-pressed={isSelected}

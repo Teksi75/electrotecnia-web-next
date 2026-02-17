@@ -1,39 +1,50 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --muted: #e2e8f0;
-  --muted-foreground: #475569;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --border: #cbd5e1;
-  --input: #cbd5e1;
-  --ring: #64748b;
-  --accent: #e2e8f0;
-  --accent-foreground: #0f172a;
-  --primary: #0f172a;
-  --primary-foreground: #f8fafc;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
+  color-scheme: light;
+  --background: #fffaf0;
+  --foreground: #18120b;
+  --muted: #efe4d3;
+  --muted-foreground: #5f4f3f;
+  --card: #fffcf7;
+  --card-foreground: #22180f;
+  --border: #d9c6af;
+  --input: #d9c6af;
+  --ring: #bb5d22;
+  --accent: #f7ead7;
+  --accent-foreground: #2e2014;
+  --primary: #0f3b56;
+  --primary-foreground: #f6f3ee;
+  --secondary: #faefde;
+  --secondary-foreground: #2e2014;
+  --brand-strong: #0f3b56;
+  --brand-soft: #ebf3fa;
+  --highlight: #bb5d22;
+  --radius: 1rem;
+  --shadow-color: rgba(31, 20, 9, 0.12);
 }
 
 .dark {
-  --background: #020617;
-  --foreground: #e2e8f0;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --card: #0f172a;
-  --card-foreground: #e2e8f0;
-  --border: #1e293b;
-  --input: #334155;
-  --ring: #94a3b8;
-  --accent: #1e293b;
-  --accent-foreground: #e2e8f0;
-  --primary: #e2e8f0;
-  --primary-foreground: #0f172a;
-  --secondary: #1e293b;
-  --secondary-foreground: #e2e8f0;
+  color-scheme: dark;
+  --background: #120f0b;
+  --foreground: #f7efe5;
+  --muted: #2e251b;
+  --muted-foreground: #bda689;
+  --card: #1a150f;
+  --card-foreground: #f8f0e5;
+  --border: #3f3122;
+  --input: #4f3b2a;
+  --ring: #d67a42;
+  --accent: #2a2118;
+  --accent-foreground: #f7efe5;
+  --primary: #9ad6ff;
+  --primary-foreground: #152739;
+  --secondary: #2b2016;
+  --secondary-foreground: #eddcc7;
+  --brand-strong: #9ad6ff;
+  --brand-soft: #132332;
+  --highlight: #f49d64;
+  --shadow-color: rgba(0, 0, 0, 0.36);
 }
 
 @theme inline {
@@ -52,14 +63,101 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --font-sans: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --font-sans: var(--font-source-sans);
+  --font-heading: var(--font-syne);
+  --font-mono: var(--font-plex-mono);
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at 10% 15%, color-mix(in srgb, var(--brand-soft) 80%, transparent) 0%, transparent 50%),
+    radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--accent) 82%, transparent) 0%, transparent 42%),
+    linear-gradient(180deg, color-mix(in srgb, var(--background) 88%, #000 12%) 0%, var(--background) 22%);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans), "Trebuchet MS", sans-serif;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border) 42%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 34%, transparent) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.18;
+  z-index: -1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), "Segoe UI", sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.5rem;
+  z-index: 60;
+  transform: translateY(-180%);
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--card-foreground);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.reveal-up {
+  animation: reveal-up 0.7s ease-out both;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.surface-panel {
+  border: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
+  background: color-mix(in srgb, var(--card) 96%, transparent);
+  box-shadow: 0 18px 48px -30px var(--shadow-color);
+  backdrop-filter: blur(10px);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--highlight) 34%, var(--border));
+  background: color-mix(in srgb, var(--highlight) 10%, var(--card));
+  color: var(--highlight);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  padding: 0.35rem 0.72rem;
+  text-transform: uppercase;
 }
 
 .math-inline {

@@ -15,7 +15,7 @@ export default function ElectricidadLayout({ children }: { children: ReactNode }
         <div className="mb-4 lg:hidden">
           <MobileDrawer />
         </div>
-        {children}
+        <div className="space-y-4">{children}</div>
       </section>
     </main>
   );

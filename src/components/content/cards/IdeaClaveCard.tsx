@@ -7,8 +7,8 @@ type IdeaClaveCardProps = {
 
 export function IdeaClaveCard({ block }: IdeaClaveCardProps) {
   return (
-    <section className="rounded-xl border border-sky-200 bg-sky-50/70 p-5 shadow-sm dark:border-sky-900 dark:bg-sky-950/30">
-      <h2 className="text-lg font-semibold text-sky-900 dark:text-sky-100">{block.title}</h2>
+    <section className="surface-panel rounded-2xl border-l-4 border-l-cyan-700 p-5 dark:border-l-cyan-400">
+      <h2 className="text-xl font-semibold text-cyan-900 dark:text-cyan-100">{block.title}</h2>
       {renderContentNodes(block.nodes ?? [], block.body, block.mono)}
     </section>
   );

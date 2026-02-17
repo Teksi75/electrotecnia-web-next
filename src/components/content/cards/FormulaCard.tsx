@@ -7,8 +7,8 @@ type FormulaCardProps = {
 
 export function FormulaCard({ block }: FormulaCardProps) {
   return (
-    <section className="rounded-xl border border-amber-200 bg-amber-50/70 p-5 shadow-sm dark:border-amber-900 dark:bg-amber-950/30">
-      <h2 className="text-lg font-semibold text-amber-900 dark:text-amber-100">{block.title}</h2>
+    <section className="surface-panel rounded-2xl border-l-4 border-l-amber-700 p-5 dark:border-l-amber-400">
+      <h2 className="text-xl font-semibold text-amber-900 dark:text-amber-100">{block.title}</h2>
       {renderContentNodes(block.nodes ?? [], block.body, block.mono)}
       {block.items?.length ? (
         <ul className="mt-3 list-disc space-y-1 pl-5 text-muted-foreground">

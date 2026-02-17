@@ -22,21 +22,24 @@ export default function ElectricidadIndexPage() {
 
   return (
     <div className="space-y-8">
-      <header className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Unidad: Electricidad</h1>
-        <p className="text-muted-foreground">Wiki/apunte rápido para estudiar en orden todos los temas de la unidad.</p>
+      <header className="surface-panel reveal-up space-y-3 rounded-3xl p-6">
+        <p className="eyebrow">Unidad</p>
+        <h1 className="text-4xl font-bold tracking-tight">Electricidad</h1>
+        <p className="text-muted-foreground">
+          Wiki/apunte rápido para estudiar en orden todos los temas de la unidad.
+        </p>
       </header>
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
-          <h2 className="text-xl font-semibold">Parte 1</h2>
+          <h2 className="text-2xl font-semibold">Parte 1</h2>
           <p className="mt-2 text-sm text-muted-foreground">Electricidad básica: cargas, campos y potencial.</p>
           <p className="mt-3 text-xs text-muted-foreground">Progreso: 0/{sections[0]?.children.length ?? 0} temas.</p>
           {firstPart1 ? <Button asChild className="mt-4"><Link href={firstPart1.href}>Comenzar Parte 1</Link></Button> : null}
         </Card>
 
         <Card>
-          <h2 className="text-xl font-semibold">Parte 2</h2>
+          <h2 className="text-2xl font-semibold">Parte 2</h2>
           <p className="mt-2 text-sm text-muted-foreground">Electricidad en circuitos: magnitudes y leyes fundamentales.</p>
           <p className="mt-3 text-xs text-muted-foreground">Progreso: 0/{sections[1]?.children.length ?? 0} temas.</p>
           {firstPart2 ? <Button asChild className="mt-4"><Link href={firstPart2.href}>Comenzar Parte 2</Link></Button> : null}
@@ -44,11 +47,11 @@ export default function ElectricidadIndexPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <section className="rounded-xl border border-border p-5">
-          <h2 className="text-xl font-semibold">Glosario de unidades</h2>
+        <section className="surface-panel rounded-2xl p-5">
+          <h2 className="text-2xl font-semibold">Glosario de unidades</h2>
           <ul className="mt-3 flex flex-wrap gap-2">
             {glossary.map((item) => (
-              <li key={item} className="rounded-md border border-border px-3 py-1 font-mono text-sm">{item}</li>
+              <li key={item} className="rounded-xl border border-border/80 bg-card/70 px-3 py-1 font-mono text-sm">{item}</li>
             ))}
           </ul>
         </section>

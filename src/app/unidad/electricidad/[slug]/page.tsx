@@ -58,17 +58,17 @@ export default async function ElectricidadTopicPage({ params }: PageProps) {
 
   return (
     <article className="space-y-6">
-      <header className="space-y-2 border-b border-border pb-6">
-        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Parte {topic.part}</p>
-        <h1 className="text-3xl font-bold tracking-tight">{topic.title}</h1>
+      <header className="surface-panel space-y-2 rounded-3xl p-6">
+        <p className="eyebrow">Parte {topic.part}</p>
+        <h1 className="text-4xl font-bold tracking-tight">{topic.title}</h1>
         <p className="text-muted-foreground">{topic.description}</p>
       </header>
 
       {topic.blocks.map((block, index) => <BlockCard key={`${block.type}-${index}`} block={block} />)}
 
       {topic.sections?.map((section) => (
-        <section key={section.id} id={section.id} className="scroll-mt-24 space-y-4 rounded-xl border border-border p-5">
-          <h2 className="text-xl font-semibold">{section.title}</h2>
+        <section key={section.id} id={section.id} className="surface-panel scroll-mt-24 space-y-4 rounded-2xl p-5">
+          <h2 className="text-2xl font-semibold">{section.title}</h2>
           {section.blocks.map((block, index) => <BlockCard key={`${section.id}-${block.type}-${index}`} block={block} />)}
         </section>
       ))}

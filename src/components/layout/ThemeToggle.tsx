@@ -12,11 +12,11 @@ export function ThemeToggle() {
     <Button
       type="button"
       variant="ghost"
-      className="h-9 px-3"
+      className="h-9 rounded-full border border-border/80 px-3 text-xs uppercase tracking-[0.12em]"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label="Alternar modo claro/oscuro"
     >
-      {isDark ? "Claro" : "Oscuro"}
+      {isDark ? "Modo Claro" : "Modo Oscuro"}
     </Button>
   );
 }

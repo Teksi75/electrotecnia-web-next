@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Mono, Source_Sans_3, Syne } from "next/font/google";
 
 import { Header } from "@/components/layout/Header";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
@@ -7,6 +8,24 @@ import { BASE_URL } from "@/lib/seo";
 
 import "katex/dist/katex.min.css";
 import "./globals.css";
+
+const sourceSans = Source_Sans_3({
+  variable: "--font-source-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -31,13 +50,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className="antialiased">
+      <body className={`${sourceSans.variable} ${syne.variable} ${plexMono.variable} antialiased`}>
+        <a href="#contenido-principal" className="skip-link">
+          Saltar al contenido principal
+        </a>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <div className="min-h-screen bg-background text-foreground">
+          <div className="relative min-h-screen text-foreground">
             <Header />
-            <div className="pb-12">{children}</div>
-            <footer className="border-t border-border py-4 text-center text-sm text-muted-foreground">
-              Material de consulta (Electrotecnia)
+            <div id="contenido-principal" tabIndex={-1} className="relative z-10 pb-14">
+              {children}
+            </div>
+            <footer className="border-t border-border/70 bg-card/70 py-6 text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                Material de consulta
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">Electrotecnia · enfoque práctico y navegable</p>
             </footer>
           </div>
         </ThemeProvider>

@@ -42,7 +42,7 @@ export function SearchBox({ items }: SearchBoxProps) {
   };
 
   return (
-    <div className="relative z-30 w-64 max-w-[65vw]">
+    <div className="relative z-30 w-72 max-w-[72vw]">
       <form onSubmit={onSubmit}>
         <Input
           value={query}
@@ -51,8 +51,10 @@ export function SearchBox({ items }: SearchBoxProps) {
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
-          placeholder="Buscar en la unidad..."
-          className="h-9"
+          placeholder="Buscar en la unidad…"
+          className="h-10 rounded-full border-border/80 bg-card/90 pl-4"
+          name="q"
+          autoComplete="off"
           aria-label="Buscar contenido"
         />
       </form>

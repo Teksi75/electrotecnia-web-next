@@ -38,12 +38,12 @@ function NodeItem({
         href={node.href}
         onClick={onNavigate}
         className={cn(
-          "block rounded-md px-2 py-1.5 text-sm transition-colors",
+          "block rounded-xl px-3 py-2 text-sm transition",
           depth > 0 && "ml-3",
           node.isPage && "font-medium",
           active
-            ? "bg-accent/60 text-foreground font-semibold"
-            : "text-muted-foreground hover:bg-accent/40 hover:text-foreground",
+            ? "border border-[var(--highlight)]/50 bg-accent text-foreground font-semibold"
+            : "text-muted-foreground hover:bg-accent/70 hover:text-foreground",
         )}
       >
         {node.title}
