@@ -8,7 +8,9 @@ type FormulaCardProps = {
 export function FormulaCard({ block }: FormulaCardProps) {
   return (
     <section className="surface-panel rounded-2xl border-l-4 border-l-amber-700 p-5 dark:border-l-amber-400">
-      <h2 className="text-xl font-semibold text-foreground dark:text-amber-100">{block.title}</h2>
+      <h2 className="inline-flex rounded-lg bg-amber-100 px-2.5 py-1 text-lg font-bold text-amber-950 dark:bg-amber-900/45 dark:text-amber-100">
+        {block.title}
+      </h2>
       {renderContentNodes(block.nodes ?? [], block.body, block.mono)}
       {block.items?.length ? (
         <ul className="mt-3 list-disc space-y-1 pl-5 text-muted-foreground">
