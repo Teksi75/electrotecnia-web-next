@@ -74,13 +74,49 @@ export default function HomePage() {
               <Link href="/unidad/electricidad">Ir a Unidad: Electricidad</Link>
             </Button>
           </div>
-          <aside className="surface-panel flex flex-col justify-between gap-4 rounded-2xl p-5">
+          <aside className="surface-panel relative rounded-2xl p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">Ruta sugerida</p>
-            <ol className="space-y-3 text-sm text-muted-foreground">
-              <li className="rounded-xl border border-border/70 bg-card/70 p-3">1. Cargas, campos y potencial</li>
-              <li className="rounded-xl border border-border/70 bg-card/70 p-3">2. Corriente, tensión y resistencia</li>
-              <li className="rounded-xl border border-border/70 bg-card/70 p-3">3. Leyes de Ohm, Joule y Kirchhoff</li>
-            </ol>
+
+            <div className="relative mt-4 h-[500px] rounded-2xl border border-border/50 bg-gradient-to-b from-background/60 via-background/25 to-background/70 p-4">
+              <div
+                aria-hidden="true"
+                className="absolute left-8 top-[72px] h-[344px] w-[calc(100%-4rem)] rounded-[30px] border border-[var(--highlight)]/35"
+              />
+              <div aria-hidden="true" className="absolute left-8 top-[72px] h-[344px] border-l-2 border-dashed border-[var(--highlight)]/40" />
+
+              <span
+                aria-hidden="true"
+                className="absolute left-7 top-[72px] h-2.5 w-2.5 rounded-full bg-[var(--highlight)] shadow-[0_0_20px_rgba(255,168,92,0.95)]"
+              />
+              <span
+                aria-hidden="true"
+                className="absolute left-7 top-[236px] h-2.5 w-2.5 rounded-full bg-[var(--highlight)] shadow-[0_0_20px_rgba(255,168,92,0.95)]"
+              />
+              <span
+                aria-hidden="true"
+                className="absolute right-7 top-[236px] h-2.5 w-2.5 rounded-full bg-[var(--highlight)] shadow-[0_0_20px_rgba(255,168,92,0.95)]"
+              />
+              <span
+                aria-hidden="true"
+                className="absolute left-7 top-[396px] h-2.5 w-2.5 rounded-full bg-[var(--highlight)] shadow-[0_0_20px_rgba(255,168,92,0.95)]"
+              />
+              <span
+                aria-hidden="true"
+                className="absolute right-7 top-[396px] h-2.5 w-2.5 rounded-full bg-[var(--highlight)] shadow-[0_0_20px_rgba(255,168,92,0.95)]"
+              />
+
+              <ol className="relative z-10 space-y-12 pt-4 text-base text-foreground/90">
+                <li className="rounded-2xl border border-[var(--highlight)]/35 bg-card/65 px-5 py-4 shadow-[inset_0_0_0_1px_rgba(255,168,92,0.08)]">
+                  1. Cargas, campos y potencial
+                </li>
+                <li className="rounded-2xl border border-[var(--highlight)]/35 bg-card/65 px-5 py-4 shadow-[inset_0_0_0_1px_rgba(255,168,92,0.08)]">
+                  2. Corriente, tensión y resistencia
+                </li>
+                <li className="rounded-2xl border border-[var(--highlight)]/35 bg-card/65 px-5 py-4 shadow-[inset_0_0_0_1px_rgba(255,168,92,0.08)]">
+                  3. Leyes de Ohm, Joule y Kirchhoff
+                </li>
+              </ol>
+            </div>
           </aside>
         </div>
       </section>
