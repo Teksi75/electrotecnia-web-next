@@ -53,6 +53,13 @@ const studyTips = [
 ];
 
 export default function HomePage() {
+  const routeSteps = [
+    "Cargas, campos y potencial",
+    "Corriente, tensión y resistencia",
+    "Leyes de Ohm, Joule y Kirchhoff",
+    "Aplicaciones y práctica guiada",
+  ];
+
   return (
     <main className="mx-auto w-full max-w-6xl space-y-10 px-4 py-10 sm:px-6 lg:px-8">
       <section className="surface-panel reveal-up overflow-hidden rounded-3xl p-6 sm:p-8">
