@@ -74,12 +74,32 @@ export default function HomePage() {
               <Link href="/unidad/electricidad">Ir a Unidad: Electricidad</Link>
             </Button>
           </div>
-          <aside className="surface-panel flex flex-col justify-between gap-4 rounded-2xl p-5">
+          <aside className="study-route surface-panel rounded-2xl p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">Ruta sugerida</p>
-            <ol className="space-y-3 text-sm text-muted-foreground">
-              <li className="rounded-xl border border-border/70 bg-card/70 p-3">1. Cargas, campos y potencial</li>
-              <li className="rounded-xl border border-border/70 bg-card/70 p-3">2. Corriente, tensión y resistencia</li>
-              <li className="rounded-xl border border-border/70 bg-card/70 p-3">3. Leyes de Ohm, Joule y Kirchhoff</li>
+            <div className="study-route__canvas" aria-hidden="true">
+              <span className="study-route__badge study-route__badge--charge">+q</span>
+              <span className="study-route__badge study-route__badge--voltage">V</span>
+
+              <span className="study-route__formula study-route__formula--ohm">I = V/R</span>
+              <span className="study-route__formula study-route__formula--kirchhoff">Σ = 0</span>
+
+              <span className="study-route__line study-route__line--left" />
+              <span className="study-route__line study-route__line--right" />
+              <span className="study-route__line study-route__line--top" />
+              <span className="study-route__line study-route__line--mid" />
+              <span className="study-route__line study-route__line--bottom" />
+
+              <span className="study-route__dot study-route__dot--left-top" />
+              <span className="study-route__dot study-route__dot--left-mid" />
+              <span className="study-route__dot study-route__dot--left-bottom" />
+              <span className="study-route__dot study-route__dot--right-mid" />
+              <span className="study-route__dot study-route__dot--right-bottom" />
+            </div>
+
+            <ol className="study-route__list text-sm text-muted-foreground">
+              <li className="study-route__item">1. Cargas, campos y potencial</li>
+              <li className="study-route__item">2. Corriente, tensión y resistencia</li>
+              <li className="study-route__item">3. Leyes de Ohm, Joule y Kirchhoff</li>
             </ol>
           </aside>
         </div>
