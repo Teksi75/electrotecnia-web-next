@@ -53,6 +53,13 @@ const studyTips = [
 ];
 
 export default function HomePage() {
+  const routeSteps = [
+    "Cargas, campos y potencial",
+    "Corriente, tensión y resistencia",
+    "Leyes de Ohm, Joule y Kirchhoff",
+    "Aplicaciones y práctica guiada",
+  ];
+
   return (
     <main className="mx-auto w-full max-w-6xl space-y-10 px-4 py-10 sm:px-6 lg:px-8">
       <section className="surface-panel reveal-up overflow-hidden rounded-3xl p-6 sm:p-8">
@@ -74,13 +81,42 @@ export default function HomePage() {
               <Link href="/unidad/electricidad">Ir a Unidad: Electricidad</Link>
             </Button>
           </div>
-          <aside className="surface-panel flex flex-col justify-between gap-4 rounded-2xl p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">Ruta sugerida</p>
-            <ol className="space-y-3 text-sm text-muted-foreground">
-              <li className="rounded-xl border border-border/70 bg-card/70 p-3">1. Cargas, campos y potencial</li>
-              <li className="rounded-xl border border-border/70 bg-card/70 p-3">2. Corriente, tensión y resistencia</li>
-              <li className="rounded-xl border border-border/70 bg-card/70 p-3">3. Leyes de Ohm, Joule y Kirchhoff</li>
-            </ol>
+          <aside className="surface-panel relative overflow-hidden rounded-2xl p-5">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_15%,rgba(255,180,94,0.22),transparent_40%),radial-gradient(circle_at_90%_85%,rgba(255,180,94,0.14),transparent_35%)]"
+            />
+            <div className="relative flex h-full min-h-[420px] flex-col">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">Ruta sugerida</p>
+
+              <div className="relative mt-8 flex-1">
+                <div
+                  aria-hidden="true"
+                  className="absolute left-6 right-6 top-[18%] h-[64%] rounded-[2rem] border border-[var(--highlight-soft)]/60"
+                />
+                <div aria-hidden="true" className="absolute bottom-12 left-7 top-[22%] border-l border-dashed border-[var(--highlight-soft)]/70" />
+                <div
+                  aria-hidden="true"
+                  className="absolute bottom-12 right-7 top-[36%] border-r border-dashed border-[var(--highlight-soft)]/70"
+                />
+
+                <ol className="relative z-10 flex h-full flex-col justify-between gap-5 text-sm text-foreground/90">
+                  {routeSteps.map((step, index) => (
+                    <li key={step} className="relative flex items-center gap-3">
+                      <span className="relative grid size-12 shrink-0 place-items-center rounded-full border border-[var(--highlight-soft)] bg-card/80 text-lg font-semibold text-[var(--highlight)] shadow-[0_0_18px_rgba(247,176,106,0.38)]">
+                        {index === 0 ? "+q" : index === 1 ? "V" : index === 2 ? "Ω" : "Σ"}
+                      </span>
+                      <span className="flex-1 rounded-xl border border-[var(--highlight-soft)] bg-card/70 p-3 text-base">
+                        {index + 1}. {step}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+
+                <p className="absolute right-10 top-[47%] text-2xl text-[var(--highlight)]/80">I = V/R</p>
+                <p className="absolute bottom-14 left-16 text-xl text-[var(--highlight)]/70">ΣI = 0</p>
+              </div>
+            </div>
           </aside>
         </div>
       </section>
