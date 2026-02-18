@@ -145,6 +145,287 @@ h6 {
   backdrop-filter: blur(10px);
 }
 
+
+
+.study-route {
+  position: relative;
+  display: flex;
+  min-height: 33rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--highlight) 24%, var(--border));
+  background:
+    radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--highlight) 15%, transparent) 0%, transparent 44%),
+    radial-gradient(circle at 84% 88%, color-mix(in srgb, var(--highlight) 11%, transparent) 0%, transparent 38%),
+    color-mix(in srgb, var(--card) 94%, transparent);
+}
+
+.study-route__canvas {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+.study-route__list {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.study-route__item {
+  border-radius: 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--highlight) 28%, var(--border));
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  padding: 0.82rem 0.95rem;
+  color: color-mix(in srgb, var(--foreground) 88%, var(--muted-foreground));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent);
+}
+
+.study-route__formula {
+  position: absolute;
+  font-family: var(--font-heading), "Segoe UI", sans-serif;
+  font-size: 1.65rem;
+  color: color-mix(in srgb, var(--highlight) 85%, var(--foreground));
+  opacity: 0.82;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--highlight) 28%, transparent);
+}
+
+.study-route__formula--ohm {
+  left: 42%;
+  top: 45%;
+}
+
+.study-route__formula--kirchhoff {
+  left: 58%;
+  top: 67%;
+  font-size: 1.95rem;
+}
+
+.study-route__line {
+  position: absolute;
+  border-color: color-mix(in srgb, var(--highlight) 52%, var(--border));
+  opacity: 0.9;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--highlight) 42%, transparent));
+}
+
+.study-route__line--left {
+  left: 1.45rem;
+  top: 6.1rem;
+  bottom: 3.6rem;
+  border-left: 3px solid;
+  border-radius: 1.4rem;
+}
+
+.study-route__line--right {
+  right: 1.35rem;
+  top: 11rem;
+  bottom: 3.7rem;
+  border-right: 3px solid;
+  border-radius: 1.4rem;
+}
+
+.study-route__line--top,
+.study-route__line--mid,
+.study-route__line--bottom {
+  left: 2.5rem;
+  right: 2.2rem;
+  border-top: 3px solid;
+  border-radius: 9999px;
+}
+
+.study-route__line--top {
+  top: 7.3rem;
+}
+
+.study-route__line--mid {
+  top: 18.8rem;
+}
+
+.study-route__line--bottom {
+  top: 30.2rem;
+}
+
+.study-route__badge {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  border: 2px solid color-mix(in srgb, var(--highlight) 68%, var(--border));
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  color: color-mix(in srgb, var(--highlight) 86%, var(--foreground));
+  font-family: var(--font-heading), "Segoe UI", sans-serif;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--highlight) 30%, transparent);
+}
+
+.study-route__badge--charge {
+  left: 2.95rem;
+  top: 5.35rem;
+  height: 3.6rem;
+  width: 3.6rem;
+  font-size: 2rem;
+}
+
+.study-route__badge--voltage {
+  left: 0.6rem;
+  top: 17.35rem;
+  height: 3.05rem;
+  width: 3.05rem;
+  font-size: 2rem;
+}
+
+.study-route__dot {
+  position: absolute;
+  height: 0.8rem;
+  width: 0.8rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--highlight) 88%, #fff);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--highlight) 35%, transparent),
+    0 0 14px color-mix(in srgb, var(--highlight) 80%, transparent);
+}
+
+.study-route__dot--left-top {
+  left: 2.05rem;
+  top: 7.03rem;
+}
+
+.study-route__dot--left-mid {
+  left: 2.05rem;
+  top: 18.55rem;
+}
+
+.study-route__dot--left-bottom {
+  left: 2.05rem;
+  top: 29.95rem;
+}
+
+.study-route__dot--right-mid {
+  right: 1.82rem;
+  top: 18.55rem;
+}
+
+.study-route__dot--right-bottom {
+  right: 1.82rem;
+  top: 29.95rem;
+}
+
+@media (max-width: 1200px) {
+  .study-route {
+    min-height: 30rem;
+  }
+
+  .study-route__line--mid {
+    top: 17.6rem;
+  }
+
+  .study-route__line--bottom {
+    top: 28.5rem;
+  }
+
+  .study-route__dot--left-mid,
+  .study-route__dot--right-mid {
+    top: 17.35rem;
+  }
+
+  .study-route__dot--left-bottom,
+  .study-route__dot--right-bottom {
+    top: 28.2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .study-route {
+    min-height: 24.5rem;
+    padding-bottom: 1.1rem;
+  }
+
+  .study-route__line--left {
+    top: 4.9rem;
+    bottom: 3rem;
+  }
+
+  .study-route__line--right {
+    top: 8.2rem;
+    bottom: 3rem;
+  }
+
+  .study-route__line--top {
+    top: 5.9rem;
+  }
+
+  .study-route__line--mid {
+    top: 13.2rem;
+  }
+
+  .study-route__line--bottom {
+    top: 20.1rem;
+  }
+
+  .study-route__badge--charge {
+    left: 2.35rem;
+    top: 4.05rem;
+    height: 3.1rem;
+    width: 3.1rem;
+    font-size: 1.75rem;
+  }
+
+  .study-route__badge--voltage {
+    left: 0.35rem;
+    top: 11.9rem;
+    height: 2.7rem;
+    width: 2.7rem;
+    font-size: 1.7rem;
+  }
+
+  .study-route__formula {
+    font-size: 1.25rem;
+    opacity: 0.72;
+  }
+
+  .study-route__formula--ohm {
+    left: 45%;
+    top: 44%;
+  }
+
+  .study-route__formula--kirchhoff {
+    left: 62%;
+    top: 67%;
+    font-size: 1.5rem;
+  }
+
+  .study-route__dot--left-top {
+    top: 5.65rem;
+  }
+
+  .study-route__dot--left-mid,
+  .study-route__dot--right-mid {
+    top: 12.95rem;
+  }
+
+  .study-route__dot--left-bottom,
+  .study-route__dot--right-bottom {
+    top: 19.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .study-route {
+    min-height: auto;
+    background: color-mix(in srgb, var(--card) 94%, transparent);
+  }
+
+  .study-route__canvas,
+  .study-route__formula {
+    display: none;
+  }
+
+  .study-route__list {
+    margin-top: 0.65rem;
+  }
+}
 .eyebrow {
   display: inline-flex;
   align-items: center;
