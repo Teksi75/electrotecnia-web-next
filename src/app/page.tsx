@@ -67,11 +67,12 @@ export default function HomePage() {
           <div className="space-y-6">
             <Badge>Unidad activa</Badge>
             <h1 className="text-balance text-4xl font-extrabold leading-tight sm:text-5xl">
-              Electrotecnia sin ruido: teoría clara, fórmulas y práctica aplicada
+              Servicio académico de Electrotecnia para alumnos de INGENIUM
             </h1>
             <p className="max-w-3xl text-lg text-muted-foreground">
-              Esta wiki está pensada para estudiantes que necesitan entender, repasar y practicar Electricidad de
-              forma ordenada. Podés recorrerla en secuencia como curso breve o usarla como apunte rápido por tema.
+              Esta plataforma fue diseñada para que los alumnos de INGENIUM estudien Electricidad con una secuencia
+              clara de teoría, fórmulas y práctica aplicada. Podés recorrerla de principio a fin o consultar cada
+              tema como material de apoyo.
             </p>
             <div className="max-w-3xl rounded-2xl border border-border/80 bg-secondary/60 p-4 text-sm text-secondary-foreground">
               Encontrarás explicaciones breves, fórmulas clave y ejemplos numéricos para conectar teoría con
